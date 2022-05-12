@@ -15,8 +15,11 @@ export default {
 
         light: '#F4F5F8',
         medium: '#A3A4A6',
+        gray: '#E0E0E0',
         dark: '#3E4146',
+
         shape: '#FFFFFF',
+        black: '#000000',
 
         transparent: 'transparent',
     },

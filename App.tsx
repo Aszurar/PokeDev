@@ -1,9 +1,10 @@
-import React from 'react';
 import 'react-native-gesture-handler';
-import { Home } from './src/screens/Home';
+import React from 'react';
 import { Platform, StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
 import theme from './src/global/styles/theme';
+import { NavigationContainer } from '@react-navigation/native';
+import { AppRoutes } from './src/routes/app.routes';
 
 export default function App() {
     return (
@@ -13,7 +14,9 @@ export default function App() {
                 backgroundColor={Platform.OS === 'ios' ? theme.colors.comp : theme.colors.transparent}
                 translucent={Platform.OS === 'android'}
             />
-            <Home />
+            <NavigationContainer>
+                <AppRoutes />
+            </NavigationContainer>
         </ThemeProvider>
     );
 }

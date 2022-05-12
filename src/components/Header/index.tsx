@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ChevronLeft } from 'react-native-feather';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -24,14 +25,16 @@ export function Header({
     subtitle,
     isBackButtonAvailable = false
 }: IHeader) {
-
+    const navigation = useNavigation();
     const theme = useTheme();
 
     return (
         <Container>
             <HeaderContainer>
                 {isBackButtonAvailable && (
-                    <BackButton>
+                    <BackButton
+                        onPress={() => navigation.goBack()}
+                    >
                         <ChevronLeft
                             width={RFValue(24)}
                             height={RFValue(24)}
