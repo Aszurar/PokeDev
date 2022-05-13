@@ -13,22 +13,23 @@ import {
 
 interface ICard {
     name: string;
+    moveList?: boolean;
 }
 
-export function Card({ name }: ICard) {
+export function Card({ name, moveList = false }: ICard) {
     const theme = useTheme();
     const navigation = useNavigation<any>();
 
     return (
         <Container>
             <InfoContainer
-                onPress={() => navigation.navigate('PokemonDetails', { name })}
+                onPress={() => moveList ? {} : navigation.navigate('PokemonDetails', { name })}
             >
                 <Title>{capitalizeFirstLetter(name)}</Title>
                 <ChevronRight
                     width={RFValue(24)}
                     height={RFValue(24)}
-                    stroke={theme.colors.comp}
+                    stroke={moveList ? theme.colors.danger : theme.colors.comp}
                     strokeWidth={2}
                 />
             </InfoContainer>

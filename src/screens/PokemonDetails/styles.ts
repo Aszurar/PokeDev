@@ -1,3 +1,4 @@
+import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 import { setBackGroundColorByType } from '../../utils/setBackGroundColorByType';
@@ -34,7 +35,6 @@ export const ErrorText = styled.Text`
     text-align: center;
 
 `;
-
 
 
 export const Main = styled.View`
@@ -167,37 +167,24 @@ export const DescriptionContainer = styled.View`
     margin-bottom: ${RFValue(16)}px;
 `;
 
-export const AbilityContainer = styled.View`
-    width: 100%;
-    height: ${RFValue(79)}px;
-    /* margin: ${RFValue(31)}px 0; */
 
-    /* background-color: ${({theme}) => theme.colors.success}; */
+
+export const MovesButton = styled(RectButton)`
+    width: 80%;
+    background-color: ${({ theme }) => theme.colors.danger};
+    border-radius: ${RFValue(16)}px;
+
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+
+    margin-top: ${RFValue(16)}px;
+    padding: ${RFValue(6)}px ${RFValue(20)}px;
 `;
 
-export const AbilityValuesContainer = styled.View`
-    flex: 1;
-    flex-direction: row;
+export const TextMovesButton = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.regular};
+    font-size: ${RFValue(12)}px;
+    color: ${({ theme }) => theme.colors.shape};
+    /* text-transform: uppercase; */
 `;
-
-interface ITextValueLabel {
-    isMovesText: boolean;
-}
-
-export const TextValueLabel = styled.Text`
-    margin: 0;
-    padding: 0;
-    font-size: ${RFValue(16)}px;
-    color: ${({ theme }) => theme.colors.black};
-    font-family: ${({ theme }) => theme.fonts.semi_bold};
-
-    `;
-
-export const MovesContainer = styled.View`
-    width: 100%;
-    height: ${RFValue(240)}px;
-    `;
-
-export const MovesValuesContainer = styled.View`
-    flex-direction: row;
-`

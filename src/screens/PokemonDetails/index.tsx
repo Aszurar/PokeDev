@@ -28,7 +28,9 @@ import {
     FooterInfoContainer,
     ErrorComponent,
     ErrorSearchContainer,
-    ErrorText
+    ErrorText,
+    MovesButton,
+    TextMovesButton
 } from './styles';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { formatMeasure } from '../../utils/formatMeasure';
@@ -37,6 +39,7 @@ import { SpeciesDataDTO } from '../../dtos/SpeciesDataDTO';
 import { setRarity } from '../../utils/setRarity';
 import { XCircle } from 'react-native-feather';
 import { useTheme } from 'styled-components/native';
+import { MovesModal } from '../../components/MovesModal';
 
 interface Params {
     name: string;
@@ -78,6 +81,14 @@ export function PokemonDetails() {
     const [isSpeciesDetailsLoading, setIsSpeciesDetailsLoading] = useState(true);
 
 
+    const [isVisible, setIsVisible] = useState(false);
+
+    function handleOpenModal() {
+        setIsVisible(true);
+    }
+    function handleCloseModal() {
+        setIsVisible(false);
+    }
 
     useEffect(() => {
 
@@ -502,16 +513,38 @@ export function PokemonDetails() {
                                                 </PokemonInfoText>
                                             ))
                                         }
-                                        <PokemonInfoText moves>...</PokemonInfoText>
+                                        {detailsData.moves.length > 4 &&
+                                            (<PokemonInfoText moves>...</PokemonInfoText>)
+                                        }
 
                                     </PokemonTypesContainer>
                                 )
                             }
+                            <MovesButton
+                                onPress={handleOpenModal}
+                            >
+                                <TextMovesButton
+                                    style={{
+                                        includeFontPadding: false,
+                                    }}
+                                >
+                                    Ver todos os movimentos
+                                </TextMovesButton>
+                            </MovesButton>
                         </LabelContainer>
+
+
                     </Main>
                 )
             }
 
+            <MovesModal
+                pokemonName={detailsData.name}
+                movesData={detailsData.moves}
+                isLoading={isLoading}
+                isVisible={isVisible}
+                onClose={handleCloseModal}
+            />
         </Container >
     );
 }

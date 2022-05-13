@@ -165,7 +165,7 @@ export function Home() {
                         </ErrorSearchContainer>
                         <LottieView
                             source={digletAnimation}
-                            style={{ width: '100%' }}
+                            style={{ width: '100%', top: RFValue(29) }}
                             resizeMode="contain"
                             autoPlay
                             loop
