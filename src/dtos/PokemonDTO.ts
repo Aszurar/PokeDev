@@ -1,11 +1,11 @@
-
-
 export interface PokemonDetailsDTO {
     id: number;
     name: string;
-    order: number;
     weight: number;
     height: number;
+    species: {
+        url: string;
+    }
     sprites: {
         front_default: string;
     };
@@ -26,5 +26,5 @@ export interface PokemonDetailsDTO {
             name: string;
             url: string;
         }
-    }[]
+    }[];
 }

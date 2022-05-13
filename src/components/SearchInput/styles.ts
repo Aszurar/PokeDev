@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
     flex: 1;
     flex-direction: row;
-    height: ${RFValue(40)}px;
+    height: ${RFValue(48)}px;
 
     border-color: ${({ theme }) => theme.colors.danger};
     border-width: ${RFValue(1)}px;
@@ -23,7 +23,7 @@ export const Input = styled.TextInput`
     color: ${({ theme }) => theme.colors.brand};
 `;
 
-export const SearchButton = styled(RectButton)`
+export const Button = styled(RectButton)`
     background-color: ${({ theme }) => theme.colors.light}
     border-radius: ${RFValue(6)}px;
 

@@ -7,6 +7,36 @@ export const Container = styled.View`
     background-color: ${({theme}) => theme.colors.shape};
 `;
 
+
+
+export const ErrorComponent = styled.View`
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ErrorSearchContainer = styled.View`
+    position: absolute;
+    z-index: 1;
+    top: ${RFValue(72)}px;
+    padding: 0 ${RFValue(21)}px;
+
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ErrorText = styled.Text`
+    margin-top: ${RFValue(8)}px;
+    font-family: ${({ theme }) => theme.fonts.medium};
+    font-size: ${RFValue(16)}px;
+    color: ${({ theme }) => theme.colors.dark};
+    text-align: center;
+
+`;
+
+
+
 export const Main = styled.View`
     padding: 0 ${RFValue(21)}px;
 `;
@@ -53,6 +83,12 @@ export const InfoContainer = styled.View`
     margin-left: ${RFValue(13)}px;
 
     /* background-color: ${({ theme }) => theme.colors.secundary}; */
+`;
+
+export const FooterInfoContainer = styled.View`
+    flex-direction: row;
+    margin-top: ${RFValue(9)}px;
+    justify-content: space-between;
 `;
 
 export const LabelContainer = styled.View`
@@ -125,6 +161,10 @@ export const PokemonInfoText = styled.Text<IPokemonInfoText>`
         padding-top: ${RFValue(6)}px;
         padding: 0 ${RFValue(12)}px;
     `}
+`;
+
+export const DescriptionContainer = styled.View`
+    margin-bottom: ${RFValue(16)}px;
 `;
 
 export const AbilityContainer = styled.View`

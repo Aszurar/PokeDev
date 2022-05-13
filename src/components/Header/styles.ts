@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.comp};
+    background-color: ${({ theme }) => theme.colors.danger};
 `;
 
 export const HeaderContainer = styled.View`
@@ -27,7 +27,7 @@ export const HeaderTitle = styled.Text`
 export const SubHeaderContainer = styled.View`
     width: 100%;
     height: ${RFValue(43)}px;
-    background-color: ${({ theme }) => theme.colors.brand};
+    background-color: ${({ theme }) => theme.colors.black};
     justify-content: center;
     align-items: center;
 `;
