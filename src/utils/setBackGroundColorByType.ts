@@ -16,7 +16,7 @@ export function setBackGroundColorByType(type: string): setBackGroundColorByType
             break;
         case 'dragon':
             color = '#F16E57';
-            textColor = '#66cbff';
+            textColor = '#00ffed';
             break;
         case 'electric':
             color = '#F8D030';
@@ -31,8 +31,8 @@ export function setBackGroundColorByType(type: string): setBackGroundColorByType
             color = '#FD7D24';
             break;
         case 'flying':
-            color = '#d6d4d4';
-            textColor = '#00c5fc';
+            color = '#00ffed';
+            textColor = '#afacac';
             break;
         case 'ghost':
             color = '#7B62A3';

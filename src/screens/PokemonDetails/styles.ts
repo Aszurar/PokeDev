@@ -1,4 +1,4 @@
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 import { setBackGroundColorByType } from '../../utils/setBackGroundColorByType';
@@ -33,7 +33,6 @@ export const ErrorText = styled.Text`
     font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.dark};
     text-align: center;
-
 `;
 
 
@@ -47,7 +46,7 @@ export const CardInfoContainer = styled.View`
     height: ${RFValue(96)}px;
 
     margin-top: ${RFValue(31)}px;
-    margin-bottom: ${RFValue(56)}px;
+    margin-bottom: ${RFValue(80)}px;
 `;
 
 export const ImageAndMeasureContainer = styled.View`
@@ -89,6 +88,34 @@ export const FooterInfoContainer = styled.View`
     flex-direction: row;
     margin-top: ${RFValue(9)}px;
     justify-content: space-between;
+`;
+
+export const EvolutionsButtonContainer = styled.View`
+    border-color: ${({theme}) => theme.colors.danger};
+    border-width: ${RFValue(2)}px;
+    border-radius: ${RFValue(17)}px;
+    height: ${RFValue(24)}px;
+    width: ${RFValue(150)}px;
+    align-self: center;
+    margin: ${RFValue(6)}px 0;
+`;
+export const EvolutionsButton = styled(BorderlessButton)`
+    /* background-color: ${({ theme }) => theme.colors.danger}; */
+    border-color: ${({ theme }) => theme.colors.danger};
+    border-width: ${RFValue(2)}px;
+
+    border-radius: ${RFValue(20)}px;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0 ${RFValue(10)}px;
+`;
+
+export const EvolutionsButtonText = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.bold};
+    font-size: ${RFValue(10)}px;
+    color: ${({ theme }) => theme.colors.danger};
+    text-transform: uppercase;
 `;
 
 export const LabelContainer = styled.View`
@@ -165,6 +192,7 @@ export const PokemonInfoText = styled.Text<IPokemonInfoText>`
 
 export const DescriptionContainer = styled.View`
     margin-bottom: ${RFValue(16)}px;
+    margin-top: ${RFValue(30)}px;
 `;
 
 

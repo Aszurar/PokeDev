@@ -30,7 +30,10 @@ import {
     ErrorSearchContainer,
     ErrorText,
     MovesButton,
-    TextMovesButton
+    TextMovesButton,
+    EvolutionsButton,
+    EvolutionsButtonText,
+    EvolutionsButtonContainer
 } from './styles';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { formatMeasure } from '../../utils/formatMeasure';
@@ -40,6 +43,8 @@ import { setRarity } from '../../utils/setRarity';
 import { XCircle } from 'react-native-feather';
 import { useTheme } from 'styled-components/native';
 import { MovesModal } from '../../components/MovesModal';
+import { EvolutionDTO } from '../../dtos/EvolutionDTO';
+import { EvolutionsModal } from '../../components/EvolutionsModal';
 
 interface Params {
     name: string;
@@ -66,6 +71,28 @@ const defaultDescribeValue = {
     }
 }
 
+const defaultEvolutionData = {
+    chain: {
+        evolves_to: [{
+            evolves_to: [
+                {
+                    species: {
+                        name: '',
+                    }
+                }
+            ],
+            species: {
+                name: '',
+            }
+        }
+        ],
+        species: {
+            name: '',
+        }
+    }
+}
+
+
 export function PokemonDetails() {
     const route = useRoute();
     const theme = useTheme();
@@ -74,41 +101,81 @@ export function PokemonDetails() {
     const [detailsData, setDetailsData] = useState<PokemonDetailsDTO>({} as PokemonDetailsDTO);
     const [speciesData, setSpeciesData] = useState<SpeciesDataDTO>({} as SpeciesDataDTO)
     const [describe, setDescribe] = useState<IDescribe>(defaultDescribeValue as IDescribe);
+    const [evolutionsData, setEvolutionsData] = useState(defaultEvolutionData as EvolutionDTO);
 
     const [isErrored, setisErrored] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
     const [isSpeciesDetailsLoading, setIsSpeciesDetailsLoading] = useState(true);
+    const [isEvolutionsDataLoading, setIsEvolutionsDataLoading] = useState(true);
 
 
-    const [isVisible, setIsVisible] = useState(false);
+    const [isMovesVisible, setIsMovesVisible] = useState(false);
+    const [isEvolutionVisible, setIsEvolutionVisible] = useState(false);
 
-    function handleOpenModal() {
-        setIsVisible(true);
+    function handleOpenMovesModal() {
+        setIsMovesVisible(true);
     }
+
     function handleCloseModal() {
-        setIsVisible(false);
+        setIsMovesVisible(false);
+    }
+    function handleOpenEvolutionsModal() {
+        setIsEvolutionVisible(true);
+    }
+    function handleCloseEvolutionsModal() {
+        setIsEvolutionVisible(false);
+    }
+
+
+    async function loadPokemonSpecieDetails() {
+        setIsSpeciesDetailsLoading(true);
+        try {
+            const pokemonID = detailsData.species.url.split('/')[6];
+            console.log("==========>", pokemonID);
+            const response = await api.get(`/pokemon-species/${pokemonID}`);
+            const data = response.data as SpeciesDataDTO;
+            setSpeciesData(data);
+
+            setDescribe(data.flavor_text_entries.find(({ language }) => language.name === 'en')!)
+            setisErrored(false);
+        } catch (err) {
+            setisErrored(true);
+            console.log(err);
+        } finally {
+            setIsSpeciesDetailsLoading(false);
+        }
+    }
+    async function loadEvolutionsData() {
+        setIsEvolutionsDataLoading(true);
+        try {
+            const evolutionID = speciesData.evolution_chain.url.split('/')[6];
+            console.log("==========>", evolutionID);
+            const response = await api.get(`/evolution-chain/${evolutionID}`);
+            const data = response.data;
+            setEvolutionsData(data);
+
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsEvolutionsDataLoading(false);
+            // if (!isEvolutionsDataLoading) {
+
+            //     console.log("==========>", evolutionsData);
+
+            //     evolutionsData.chain.evolves_to.map(({ species, evolves_to }) => {
+            //         console.log("==========>", species.name);
+            //         evolves_to.map(({ species }) => {
+            //             console.log("====evolucao2======>", species.name);
+            //         }
+            //         )
+            //     })
+            // }
+
+        }
     }
 
     useEffect(() => {
-
-        async function loadPokemonSpecieDetails() {
-            setIsSpeciesDetailsLoading(true);
-            try {
-                const response = await api.get(`/pokemon-species/${name}`);
-                const data = response.data as SpeciesDataDTO;
-                setSpeciesData(data);
-
-                setDescribe(data.flavor_text_entries.find(({ language }) => language.name === 'en')!)
-                setisErrored(false);
-            } catch (err) {
-                setisErrored(true);
-                console.log(err);
-            } finally {
-                setIsSpeciesDetailsLoading(false);
-            }
-        }
-
         async function loadPokemonDetailsData() {
             setIsLoading(true);
             try {
@@ -123,10 +190,17 @@ export function PokemonDetails() {
 
             }
         }
+
         loadPokemonDetailsData();
-        loadPokemonSpecieDetails();
 
     }, []);
+
+    useEffect(() => {
+        if (!isLoading) {
+            loadPokemonSpecieDetails();
+            loadEvolutionsData();
+        }
+    }, [isLoading])
 
     return (
         <Container>
@@ -279,7 +353,7 @@ export function PokemonDetails() {
                                             }}
 
                                         >Nº:</LabelText>
-                                        {isLoading ?
+                                        {isSpeciesDetailsLoading ?
                                             (
                                                 <View style={{ borderRadius: RFValue(16) }}>
                                                     <LottieView
@@ -297,7 +371,7 @@ export function PokemonDetails() {
                                                         includeFontPadding: false,
                                                     }}
                                                 >
-                                                    {String(' ' + detailsData.id)}
+                                                    {String(' ' + speciesData.id)}
                                                 </PokemonInfoText>
                                             )}
                                     </LabelContainer>
@@ -373,7 +447,6 @@ export function PokemonDetails() {
                                         }
                                     </LabelContainer>
 
-
                                     <LabelContainer>
                                         <LabelText
                                             style={{
@@ -405,6 +478,26 @@ export function PokemonDetails() {
                                         }
                                     </LabelContainer>
                                 </FooterInfoContainer>
+
+                                {!isEvolutionsDataLoading &&
+                                    (
+                                        <EvolutionsButtonContainer>
+                                            <EvolutionsButton
+                                                onPress={handleOpenEvolutionsModal}
+                                            >
+                                                <EvolutionsButtonText
+                                                    style={{
+                                                        includeFontPadding: false,
+                                                    }}
+                                                >
+                                                    Evoluções
+                                                </EvolutionsButtonText>
+                                            </EvolutionsButton>
+                                        </EvolutionsButtonContainer>
+
+                                    )
+
+                                }
                             </InfoContainer>
                         </CardInfoContainer>
 
@@ -420,7 +513,7 @@ export function PokemonDetails() {
                                     (
                                         <LottieView
                                             source={skeletonTextAnimation}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '80%' }}
                                             resizeMode="contain"
                                             autoPlay
                                             loop
@@ -452,7 +545,7 @@ export function PokemonDetails() {
                                 (
                                     <LottieView
                                         source={skeletonTextAnimation}
-                                        style={{ width: '80%' }}
+                                        style={{ width: '60%' }}
                                         resizeMode="contain"
                                         autoPlay
                                         loop
@@ -491,7 +584,7 @@ export function PokemonDetails() {
                                 (
                                     <LottieView
                                         source={skeletonTextAnimation}
-                                        style={{ width: '80%' }}
+                                        style={{ width: '60%' }}
                                         resizeMode="contain"
                                         autoPlay
                                         loop
@@ -519,18 +612,35 @@ export function PokemonDetails() {
 
                                     </PokemonTypesContainer>
                                 )
+
+
                             }
-                            <MovesButton
-                                onPress={handleOpenModal}
-                            >
-                                <TextMovesButton
-                                    style={{
-                                        includeFontPadding: false,
-                                    }}
-                                >
-                                    Ver todos os movimentos
-                                </TextMovesButton>
-                            </MovesButton>
+                            {
+
+                                !isLoading ?
+                                    detailsData.moves.length > 4 && (
+                                        <MovesButton
+                                            onPress={handleOpenMovesModal}
+                                        >
+                                            <TextMovesButton
+                                                style={{
+                                                    includeFontPadding: false,
+                                                }}
+                                            >
+                                                Ver todos os movimentos
+                                            </TextMovesButton>
+                                        </MovesButton>
+                                    )
+                                    :
+                                    (<LottieView
+                                        source={skeletonTextAnimation}
+                                        style={{ width: '60%', alignSelf: 'center' }}
+                                        resizeMode="contain"
+                                        autoPlay
+                                        loop
+                                    />)
+                            }
+
                         </LabelContainer>
 
 
@@ -542,9 +652,21 @@ export function PokemonDetails() {
                 pokemonName={detailsData.name}
                 movesData={detailsData.moves}
                 isLoading={isLoading}
-                isVisible={isVisible}
+                isVisible={isMovesVisible}
                 onClose={handleCloseModal}
             />
+
+
+            {!isEvolutionsDataLoading && (
+                <EvolutionsModal
+                    pokemonName={detailsData.name}
+                    isLoading={isLoading}
+                    evolutionData={evolutionsData}
+                    isEvolutionLoading={isEvolutionsDataLoading}
+                    isVisible={isEvolutionVisible}
+                    onClose={handleCloseEvolutionsModal}
+                />)
+            }
         </Container >
     );
 }

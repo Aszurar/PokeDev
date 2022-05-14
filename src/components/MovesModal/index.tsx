@@ -12,21 +12,34 @@ import {
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MovesList } from '../MovesList';
 import { Header } from '../Header';
-import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
 interface IModal {
     isVisible: boolean;
     onClose: () => void;
     pokemonName: string;
     isLoading: boolean;
-    movesData: {
+    movesData?: {
         move: {
             name: string;
             url: string;
         }
     }[];
 }
-export function MovesModal({ isVisible, onClose, movesData, pokemonName, isLoading }: IModal) {
+
+const defaultMovesData = [{
+    move: {
+        name: '',
+        url: ''
+    }
+}]
+export function MovesModal({
+    onClose,
+    isVisible,
+    isLoading,
+    pokemonName,
+    movesData = defaultMovesData,
+}: IModal) {
+
     const theme = useTheme();
 
     return (

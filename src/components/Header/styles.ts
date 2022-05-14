@@ -31,7 +31,7 @@ export const HeaderTitle = styled.Text`
 export const StripeMoveModal = styled.View`
     position: absolute;
     top: -${RFValue(8)}px;
-    height: ${RFValue(90)}px;
+    height: ${RFValue(60)}px;
     width: ${RFValue(30)}px;
     border-radius: ${RFValue(30)}px;
     background-color: ${({ theme }) => theme.colors.danger};

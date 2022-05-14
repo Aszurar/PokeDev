@@ -1,4 +1,8 @@
 export interface SpeciesDataDTO {
+    id: number;
+    evolution_chain: {
+        url: string;
+    };
     is_legendary: boolean;
     is_mythical: boolean;
     habitat: {
