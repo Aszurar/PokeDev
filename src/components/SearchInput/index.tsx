@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import LottieView from 'lottie-react-native';
 import pokeballAnimation from '../../assets/pokeball.json';
 import PokeballIcon from '../../assets/icons/pokeball.svg';
@@ -14,6 +14,7 @@ import {
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useGeneralSearch } from '../../hooks/generalSearch';
 import { useIndividualSearch } from '../../hooks/individualSearch';
+import { Keyboard, TextInput } from 'react-native';
 
 
 export function SearchInput() {
@@ -30,6 +31,7 @@ export function SearchInput() {
     const [isInputInFocus, setIsInputInFocus] = useState(false);
     const [resetSearch, setIsResetSearch] = useState(false);
 
+    const inputRef = useRef<TextInput>(null);
 
     function handleInputInFocus() {
         setIsInputInFocus(true);
@@ -78,6 +80,22 @@ export function SearchInput() {
         }
     }
 
+    useEffect(() => {
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                handleInputInBlur();
+                inputRef.current?.blur();
+            },
+        );
+
+        return () => {
+            keyboardDidHideListener.remove();
+        };
+
+    }, [Keyboard])
+
+
     return (
         <Container>
             <IconContainer>
@@ -96,8 +114,9 @@ export function SearchInput() {
                 }
             </IconContainer>
             <Input
+                ref={inputRef}
                 autoCorrect={false}
-                autoCompleteType="off"
+                autoComplete="off"
                 returnKeyType="send"
                 onBlur={handleInputInBlur}
                 onFocus={handleInputInFocus}

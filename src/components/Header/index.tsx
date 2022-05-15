@@ -11,7 +11,6 @@ import {
     Container,
     HeaderContainer,
     HeaderTitle,
-    StripeMoveModal,
     SubHeaderContainer,
     SubHeaderTitle
 } from './styles';
@@ -20,7 +19,6 @@ import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
 interface IHeader {
     title: string;
-    moveList?: boolean;
     subtitle: string;
     isLoading?: boolean;
     isBackButtonAvailable?: boolean;
@@ -28,7 +26,6 @@ interface IHeader {
 
 export function Header({
     title,
-    moveList = false,
     subtitle,
     isLoading = false,
     isBackButtonAvailable = false
@@ -37,19 +34,7 @@ export function Header({
     const theme = useTheme();
 
     return (
-        <Container
-            moveList={moveList}
-        >
-            {moveList && (
-                <StripeMoveModal
-                    style={{ right: RFValue(60) }}
-                />
-            )}
-            {moveList && (
-                <StripeMoveModal
-                    style={{ left: RFValue(60) }}
-                />
-            )}
+        <Container>
             <HeaderContainer>
                 {isBackButtonAvailable && (
                     <BackButton

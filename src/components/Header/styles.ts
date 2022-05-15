@@ -3,13 +3,10 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
-interface IContainer{
-    moveList: boolean;
-}
 
-export const Container = styled.View<IContainer>`
+export const Container = styled.View`
     width: 100%;
-    background-color: ${({ theme, moveList }) => moveList ? theme.colors.comp : theme.colors.danger};
+    background-color: ${({ theme }) => theme.colors.danger};
 `;
 
 export const HeaderContainer = styled.View`
@@ -26,16 +23,6 @@ export const HeaderTitle = styled.Text`
     font-family: ${({ theme }) => theme.fonts.extra_bold};
     font-size: ${RFValue(17)}px;
     color: ${({ theme }) => theme.colors.light};
-`;
-
-export const StripeMoveModal = styled.View`
-    position: absolute;
-    top: -${RFValue(8)}px;
-    height: ${RFValue(60)}px;
-    width: ${RFValue(30)}px;
-    border-radius: ${RFValue(30)}px;
-    background-color: ${({ theme }) => theme.colors.danger};
-
 `;
 
 export const SubHeaderContainer = styled.View`

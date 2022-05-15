@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import LottieView from 'lottie-react-native';
 import pokeballAnimation from '../../assets/pokeball.json';
 import digletAnimation from '../../assets/diglet.json';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Card } from '../../components/Card';
 import { Header } from '../../components/Header';
 import { PokemonList } from '../../components/PokemonList';
 import { SearchInput } from '../../components/SearchInput';
-import { api } from '../../services/api';
 
 import {
-    CardContainer,
     Container,
     ErrorComponent,
     ErrorSearchContainer,
@@ -25,7 +21,6 @@ import {
 import { Search } from 'react-native-feather';
 import { useTheme } from 'styled-components/native';
 import { useGeneralSearch } from '../../hooks/generalSearch';
-import { useFocusEffect } from '@react-navigation/native';
 import { useIndividualSearch } from '../../hooks/individualSearch';
 
 export interface IGeralSearch {
@@ -52,78 +47,77 @@ export function Home() {
     const { individualSearchLoading, individualSearchError } = individualSearchProps
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <Container>
-                <Header
-                    title='PokeDev'
-                    subtitle='Lista de Pokémons'
-                />
+        <Container>
+            <Header
+                title='PokeDev'
+                subtitle='Lista de Pokémons'
+            />
 
-                <SearchContainer>
-                    <SearchInput />
+            <SearchContainer>
+                <SearchInput />
 
-                    <TotalPokemonContainer>
-                        {generalListLoading ? (
-                            <LottieView
-                                source={pokeballAnimation}
-                                style={{ height: RFValue(24) }}
-                                resizeMode="contain"
-                                autoPlay
-                                loop
-                            />
-                        ) :
-                            (<TotalPokemonText
-                                style={{
-                                    includeFontPadding: false,
-                                }}>
-                                {String(totalPokemon)}
-                            </TotalPokemonText>)
-                        }
-                    </TotalPokemonContainer>
-
-                </SearchContainer>
-
-                {generalListError || individualSearchError ? (
-                    <ErrorComponent>
-                        <ErrorSearchContainer>
-                            <Search
-                                width={RFValue(100)}
-                                height={RFValue(100)}
-                                color={theme.colors.dark}
-                                strokeWidth={2}
-                            />
-                            <ErrorText>
-                                Ocorreu um erro ao buscar o Pokémon, verifique se o nome está correto e tente novamente.
-                            </ErrorText>
-                        </ErrorSearchContainer>
+                <TotalPokemonContainer>
+                    {generalListLoading ? (
                         <LottieView
-                            source={digletAnimation}
-                            style={{ width: '100%', top: RFValue(29) }}
+                            source={pokeballAnimation}
+                            style={{ height: RFValue(24) }}
                             resizeMode="contain"
                             autoPlay
                             loop
                         />
-                    </ErrorComponent>
-                ) : (
-                    <PokemonListContainer>
-                        {(generalListLoading || individualSearchLoading) ? (
-                            <LoadingListContainer>
-                                <LottieView
-                                    source={pokeballAnimation}
-                                    style={{ height: RFValue(100) }}
-                                    resizeMode="contain"
-                                    autoPlay
-                                    loop
-                                />
-                            </LoadingListContainer >
-                        ) :
-                            <PokemonList
-                                data={pokemonList.results}
+                    ) :
+                        (<TotalPokemonText
+                            style={{
+                                includeFontPadding: false,
+                            }}>
+                            {String(totalPokemon)}
+                        </TotalPokemonText>)
+                    }
+                </TotalPokemonContainer>
+
+            </SearchContainer>
+
+
+            {generalListError || individualSearchError ? (
+                <ErrorComponent>
+                    <ErrorSearchContainer>
+                        <Search
+                            width={RFValue(100)}
+                            height={RFValue(100)}
+                            color={theme.colors.dark}
+                            strokeWidth={2}
+                        />
+                        <ErrorText>
+                            Ocorreu um erro ao buscar o Pokémon, verifique se o nome está correto e tente novamente.
+                        </ErrorText>
+                    </ErrorSearchContainer>
+                    <LottieView
+                        source={digletAnimation}
+                        style={{ width: '100%', top: RFValue(29) }}
+                        resizeMode="contain"
+                        autoPlay
+                        loop
+                    />
+                </ErrorComponent>
+            ) : (
+                <PokemonListContainer>
+                    {(generalListLoading || individualSearchLoading) ? (
+                        <LoadingListContainer>
+                            <LottieView
+                                source={pokeballAnimation}
+                                style={{ height: RFValue(100) }}
+                                resizeMode="contain"
+                                autoPlay
+                                loop
                             />
-                        }
-                    </PokemonListContainer>
-                )}
-            </Container>
-        </TouchableWithoutFeedback>
+                        </LoadingListContainer >
+                    ) :
+                        <PokemonList
+                            data={pokemonList.results}
+                        />
+                    }
+                </PokemonListContainer>
+            )}
+        </Container>
     );
 }

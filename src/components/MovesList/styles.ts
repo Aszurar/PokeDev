@@ -14,10 +14,14 @@ export const List = styled(
     FlatList as new (props: FlatListProps<IMove>) => FlatList<IMove>)
 .attrs({
     showsVerticalScrollIndicator: false,
-})``;
+})`
+background-color: ${({ theme }) => theme.colors.shape};
+border-radius: ${RFValue(6)}px;
+
+`;
 
 export const Separator = styled.View`
     height: ${RFValue(1)}px;
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.comp};
+    background-color: ${({ theme }) => theme.colors.danger};
 `;

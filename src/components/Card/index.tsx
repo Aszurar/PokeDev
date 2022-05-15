@@ -25,7 +25,8 @@ export function Card({ name, moveList = false }: ICard) {
             <InfoContainer
                 onPress={() => moveList ? {} : navigation.navigate('PokemonDetails', { name })}
             >
-                <Title>{capitalizeFirstLetter(name)}</Title>
+                <Title
+                >{capitalizeFirstLetter(name)}</Title>
                 <ChevronRight
                     width={RFValue(24)}
                     height={RFValue(24)}

@@ -37,7 +37,7 @@ import {
 } from './styles';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { formatMeasure } from '../../utils/formatMeasure';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { SpeciesDataDTO } from '../../dtos/SpeciesDataDTO';
 import { setRarity } from '../../utils/setRarity';
 import { XCircle } from 'react-native-feather';
@@ -236,6 +236,7 @@ export function PokemonDetails() {
                 :
                 (
                     <Main>
+                        {/* <ScrollView> */}
                         <CardInfoContainer>
                             <ImageAndMeasureContainer>
                                 <ImageContainer>
@@ -643,13 +644,14 @@ export function PokemonDetails() {
 
                         </LabelContainer>
 
+                        {/* </ScrollView> */}
 
                     </Main>
                 )
             }
 
             <MovesModal
-                pokemonName={detailsData.name}
+                onOpen={handleOpenMovesModal}
                 movesData={detailsData.moves}
                 isLoading={isLoading}
                 isVisible={isMovesVisible}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
 import { Card } from '../Card';
 
 import {

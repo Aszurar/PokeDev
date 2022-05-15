@@ -1,6 +1,7 @@
+import styled from 'styled-components/native';
 import {RectButton} from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
+import { TextInput } from 'react-native';
 
 export const Container = styled.View`
     flex: 1;
@@ -15,7 +16,7 @@ export const Container = styled.View`
     background-color: ${({ theme }) => theme.colors.light};
 `;
 
-export const Input = styled.TextInput`
+export const Input = styled(TextInput)`
     height: 100%;
     flex: 1;
     font-family: ${({ theme }) => theme.fonts.regular};

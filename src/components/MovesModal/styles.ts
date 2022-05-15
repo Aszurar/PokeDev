@@ -1,38 +1,48 @@
-import { BorderlessButton, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BorderlessButton, GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
-export const Container = styled.View``;
+export const Container = styled.View`
+`;
 
 
 export const ModalContainer = styled.View`
-    width: 90%;
-    height: 80%;
-
+    width: 100%
+    height: 65%;
 
     background-color: ${({ theme }) => theme.colors.shape};
-    align-self: center;
     border-radius: ${RFValue(6)}px;
 `;
 
 export const HeadeContainer = styled.View`
+    width: 100%;
+    height: ${RFValue(43)}px;
+    background-color: ${({ theme }) => theme.colors.danger};
+    /* border-width: ${RFValue(2)}px; */
+    /* border-color: ${({ theme }) => theme.colors.danger}; */
+    justify-content: center;
+    align-items: center;
 `;
 
+interface ICloseModal {
+    side?: 'left' | 'right';
+}
 
-export const CloseButtonContainer = styled(GestureHandlerRootView)`
+export const CloseButtonContainer = styled(GestureHandlerRootView)<ICloseModal>`
     position: absolute;
     z-index: 2;
-    width: 100%;
     flex-direction: row;
-    justify-content: flex-end;
-    top: 0;
+    ${({ side ='right' }) => side === 'right' && css`
+        right: 0;
+    `}
+    top: ${RFValue(4)}px;
 `;
 
-export const CloseButton = styled(BorderlessButton)`
+export const CloseButton = styled(RectButton)`
     align-items: center;
     justify-content: center;
     height: ${RFValue(36)}px;
-    width: ${RFValue(36)}px;
+    width: ${RFValue(42)}px;
     border-radius: ${RFValue(18)}px;
 `;
 
@@ -40,6 +50,7 @@ export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.bold};
     font-size: ${RFValue(16)}px;
     align-self: center ;
+    color: ${({ theme }) => theme.colors.shape};
 `;
 export const ListContainer = styled.View`
     flex: 1;

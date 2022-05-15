@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
 import pokeballAnimation from '../../assets/pokeball.json';
 import { useTheme } from 'styled-components/native';
-import { XCircle } from 'react-native-feather';
+import { ChevronsDown, XCircle } from 'react-native-feather';
 import {
     CloseButton,
     CloseButtonContainer,
@@ -14,9 +14,9 @@ import { MovesList } from '../MovesList';
 import { Header } from '../Header';
 
 interface IModal {
+    onOpen: () => void;
     isVisible: boolean;
     onClose: () => void;
-    pokemonName: string;
     isLoading: boolean;
     movesData?: {
         move: {
@@ -36,7 +36,7 @@ export function MovesModal({
     onClose,
     isVisible,
     isLoading,
-    pokemonName,
+    onOpen,
     movesData = defaultMovesData,
 }: IModal) {
 
@@ -45,29 +45,46 @@ export function MovesModal({
     return (
         <Container>
             <Modal
-                animationIn={"fadeIn"}
-                animationOut={"fadeOut"}
+                animationIn={"fadeInUpBig"}
+                animationOut={"fadeOutDownBig"}
+                animationInTiming={700}
+                animationOutTiming={700}
+                backdropColor={theme.colors.shape}
                 isVisible={isVisible}
-                onBackdropPress={onClose}
-                useNativeDriver
+                hasBackdrop={false}
+                swipeDirection={['down']}
+                swipeThreshold={220}
+                onSwipeComplete={onClose}
+                onSwipeCancel={onOpen}
+                useNativeDriverForBackdrop
+                style={{ width: '100%', alignSelf: 'center', justifyContent: 'flex-end' }}
             >
                 <ModalContainer>
-                    <CloseButtonContainer>
+
+                    <CloseButtonContainer
+                    >
                         <CloseButton onPress={onClose}>
-                            <XCircle color={theme.colors.shape}
-                                height={RFValue(24)}
-                                width={RFValue(24)}
+                            <ChevronsDown color={theme.colors.shape}
+                                height={RFValue(36)}
+                                width={RFValue(36)}
                             />
                         </CloseButton>
                     </CloseButtonContainer>
-                    <HeadeContainer>
-                        <Header
-                            title={pokemonName}
-                            subtitle="Todos os movimentos"
-                            moveList
-                            isLoading={isLoading}
-                        />
 
+
+                    <CloseButtonContainer
+                        side="left"
+                    >
+                        <CloseButton onPress={onClose}>
+                            <ChevronsDown color={theme.colors.shape}
+                                height={RFValue(36)}
+                                width={RFValue(36)}
+                            />
+                        </CloseButton>
+                    </CloseButtonContainer>
+
+                    <HeadeContainer>
+                        <Title>Todos Movimentos</Title>
                     </HeadeContainer>
 
                     {!isLoading ? (
