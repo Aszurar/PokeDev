@@ -1,4 +1,4 @@
-export interface PokemonDetailsDTO {
+export interface PokemonDTO {
     id: number;
     name: string;
     weight: number;

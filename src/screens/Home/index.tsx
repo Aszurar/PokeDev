@@ -24,12 +24,9 @@ import {
 } from './styles';
 import { Search } from 'react-native-feather';
 import { useTheme } from 'styled-components/native';
-
-
-
-interface IIndividualPokemon {
-    name: string;
-}
+import { useGeneralSearch } from '../../hooks/generalSearch';
+import { useFocusEffect } from '@react-navigation/native';
+import { useIndividualSearch } from '../../hooks/individualSearch';
 
 export interface IGeralSearch {
     count: number;
@@ -39,77 +36,20 @@ export interface IGeralSearch {
     }[];
 }
 
-interface ISearching {
-    search: boolean;
-    searchType: 'individual' | 'general';
-}
-
 export function Home() {
-    const [pokemonList, setPokemonList] = useState<IGeralSearch>({} as IGeralSearch);
-    const [individualPokemon, setIndividualPokemon] = useState<IIndividualPokemon>({} as IIndividualPokemon);
-    const [pokemonName, setPokemonName] = useState('');
-    const [totalPokemon, setTotalPokemon] = useState(0);
-    const [searching, setSearching] = useState<ISearching>({ search: false, searchType: 'general' });
-    const [isLoading, setIsLoading] = useState(true);
-    const [searchError, setSearchError] = useState(false);
+    const { generalSearchProps } = useGeneralSearch();
+
+    const {
+        pokemonList,
+        totalPokemon,
+        generalListError,
+        generalListLoading,
+    } = generalSearchProps;
 
     const theme = useTheme();
 
-    function handleInputName(text: string) {
-        setPokemonName(text);
-    }
-
-    function handleSwitchResultComponentSearch(name: string) {
-        if (!!name) {
-            setSearching({
-                search: true,
-                searchType: 'individual'
-            });
-        } else {
-            setSearching({
-                search: false,
-                searchType: 'general'
-            });
-        }
-    }
-
-    async function individualSearch() {
-        setIsLoading(true);
-        try {
-            const response = await api.get(`/pokemon/${pokemonName.toLowerCase()}`);
-            const data = response.data as IIndividualPokemon;
-            setIndividualPokemon(data);
-            setSearchError(false);
-            setTotalPokemon(1);
-        } catch (err) {
-            setSearchError(true);
-            setTotalPokemon(0);
-            console.log('erro:', err)
-        } finally {
-            setIsLoading(false);
-        }
-
-    }
-
-    async function loadPokemonList() {
-        try {
-            setIsLoading(true);
-            const response = await api.get('/pokemon?limit=100000&offset=0');
-            const data = response.data as IGeralSearch;
-            setPokemonList(data);
-            setSearchError(false);
-            setTotalPokemon(data.results.length);
-        } catch (err) {
-            setSearchError(true);
-            setTotalPokemon(0);
-            console.log(err);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-    useEffect(() => {
-        loadPokemonList();
-    }, []);
+    const { individualSearchProps } = useIndividualSearch();
+    const { individualSearchLoading, individualSearchError } = individualSearchProps
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -120,22 +60,15 @@ export function Home() {
                 />
 
                 <SearchContainer>
-                    <SearchInput
-                        name={pokemonName}
-                        isLoading={isLoading}
-                        setName={handleInputName}
-                        generalSearch={loadPokemonList}
-                        individualSearch={individualSearch}
-                        onSubmit={handleSwitchResultComponentSearch}
-                    />
+                    <SearchInput />
 
                     <TotalPokemonContainer>
-                        {isLoading ? (
+                        {generalListLoading ? (
                             <LottieView
                                 source={pokeballAnimation}
                                 style={{ height: RFValue(24) }}
                                 resizeMode="contain"
-                                autoPlay={isLoading}
+                                autoPlay
                                 loop
                             />
                         ) :
@@ -150,7 +83,7 @@ export function Home() {
 
                 </SearchContainer>
 
-                {searchError ? (
+                {generalListError || individualSearchError ? (
                     <ErrorComponent>
                         <ErrorSearchContainer>
                             <Search
@@ -173,7 +106,7 @@ export function Home() {
                     </ErrorComponent>
                 ) : (
                     <PokemonListContainer>
-                        {isLoading ? (
+                        {(generalListLoading || individualSearchLoading) ? (
                             <LoadingListContainer>
                                 <LottieView
                                     source={pokeballAnimation}
@@ -184,19 +117,10 @@ export function Home() {
                                 />
                             </LoadingListContainer >
                         ) :
-                            (searching.searchType === 'general' && (
-                                <PokemonList
-                                    data={pokemonList.results}
-                                />
-                            ))
-                            ||
-                            (searching.searchType === 'individual' && (
-                                <CardContainer>
-                                    <Card
-                                        name={individualPokemon.name}
-                                    />
-                                </CardContainer>
-                            ))}
+                            <PokemonList
+                                data={pokemonList.results}
+                            />
+                        }
                     </PokemonListContainer>
                 )}
             </Container>

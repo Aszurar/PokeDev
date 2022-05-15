@@ -12,26 +12,21 @@ import {
     Input,
 } from './styles';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useGeneralSearch } from '../../hooks/generalSearch';
+import { useIndividualSearch } from '../../hooks/individualSearch';
 
-interface ISeatchInput {
-    name: string;
-    isLoading: boolean;
-    setName: (text: string) => void;
-    onSubmit: (name: string) => void;
-    individualSearch(): Promise<void>;
-    generalSearch(): Promise<void>;
 
-}
-
-export function SearchInput({
-    isLoading,
-    name,
-    setName,
-    onSubmit,
-    individualSearch,
-    generalSearch
-}: ISeatchInput) {
+export function SearchInput() {
     const theme = useTheme();
+
+    const { generalSearchProps } = useGeneralSearch();
+    const { loadPokemonList, generalListLoading, setPokemonList, setTotalPokemon } = generalSearchProps;
+
+    const { individualSearchProps } = useIndividualSearch();
+    const { individualSearch, individualSearchError, setIndividualSearchError } = individualSearchProps
+
+
+    const [pokemonName, setPokemonName] = useState('');
     const [isInputInFocus, setIsInputInFocus] = useState(false);
     const [resetSearch, setIsResetSearch] = useState(false);
 
@@ -48,21 +43,34 @@ export function SearchInput({
     };
 
     async function handleResetSearch() {
-        setName('');
-        onSubmit('');
-
-        await generalSearch();
-
-        handleActivateResetButton();
+        setPokemonName('');
         setIsResetSearch(false);
+        setIndividualSearchError(false);
+
+        try {
+            await loadPokemonList();
+
+        } catch (error) {
+            console.error(error);
+        }
+
 
     }
 
     async function handleIndividualSearch() {
         try {
-            onSubmit(name)
-            await individualSearch();
+            const data = await individualSearch(pokemonName);
+            const results = {
+                count: data.name !== '' ? 1 : 0,
+                results: [{
+                    name: data.name,
+                    url: data.url
+                }]
+            }
 
+            setPokemonList(results);
+            setTotalPokemon(results.count);
+            handleActivateResetButton();
         } catch (error) {
             console.log('Erro: ', error)
         } finally {
@@ -73,7 +81,7 @@ export function SearchInput({
     return (
         <Container>
             <IconContainer>
-                {(isInputInFocus || isLoading) ?
+                {(isInputInFocus || generalListLoading) ?
                     (<LottieView
                         source={pokeballAnimation}
                         style={{ height: RFValue(24) }}
@@ -94,9 +102,9 @@ export function SearchInput({
                 onBlur={handleInputInBlur}
                 onFocus={handleInputInFocus}
                 placeholder="Buscar Pokémon"
-                onChangeText={(text) => { setName(text) }}
+                onChangeText={setPokemonName}
                 onSubmitEditing={handleIndividualSearch}
-                value={name}
+                value={pokemonName}
                 style={{
                     includeFontPadding: false
                 }}
@@ -104,7 +112,7 @@ export function SearchInput({
 
 
             {
-                resetSearch && !!name && (
+                resetSearch && !!pokemonName && (
                     <Button
                         onPress={handleResetSearch}
 

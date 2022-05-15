@@ -6,7 +6,7 @@ import pokeballAnimation from '../../assets/pokeball.json';
 import digletAnimation from '../../assets/diglet.json';
 import { useRoute } from '@react-navigation/native';
 import { Header } from '../../components/Header';
-import { PokemonDetailsDTO } from '../../dtos/PokemonDTO';
+import { PokemonDTO } from '../../dtos/PokemonDTO';
 import { api } from '../../services/api';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
@@ -98,7 +98,7 @@ export function PokemonDetails() {
     const theme = useTheme();
 
     const { name } = route.params as Params;
-    const [detailsData, setDetailsData] = useState<PokemonDetailsDTO>({} as PokemonDetailsDTO);
+    const [detailsData, setDetailsData] = useState<PokemonDTO>({} as PokemonDTO);
     const [speciesData, setSpeciesData] = useState<SpeciesDataDTO>({} as SpeciesDataDTO)
     const [describe, setDescribe] = useState<IDescribe>(defaultDescribeValue as IDescribe);
     const [evolutionsData, setEvolutionsData] = useState(defaultEvolutionData as EvolutionDTO);
