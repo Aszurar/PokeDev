@@ -23,6 +23,7 @@ export const HeaderTitle = styled.Text`
     font-family: ${({ theme }) => theme.fonts.extra_bold};
     font-size: ${RFValue(17)}px;
     color: ${({ theme }) => theme.colors.light};
+    text-transform: capitalize;
 `;
 
 export const SubHeaderContainer = styled.View`

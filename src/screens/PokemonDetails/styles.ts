@@ -5,7 +5,7 @@ import { setBackGroundColorByType } from '../../utils/setBackGroundColorByType';
 
 export const Container = styled.View`
     flex: 1;
-    background-color: ${({theme}) => theme.colors.shape};
+    background-color: ${({ theme }) => theme.colors.shape};
 `;
 
 
@@ -60,7 +60,7 @@ export const ImageContainer = styled.View`
     align-items: center;
 
     border-width: ${RFValue(1)}px;
-    border-color: ${({theme}) => theme.colors.medium};
+    border-color: ${({ theme }) => theme.colors.medium};
     border-radius: ${RFValue(6)}px;
 `;
 
@@ -91,7 +91,7 @@ export const FooterInfoContainer = styled.View`
 `;
 
 export const EvolutionsButtonContainer = styled.View`
-    border-color: ${({theme}) => theme.colors.danger};
+    border-color: ${({ theme }) => theme.colors.danger};
     border-width: ${RFValue(2)}px;
     border-radius: ${RFValue(17)}px;
     height: ${RFValue(24)}px;
@@ -136,6 +136,7 @@ export const PokemonName = styled.Text`
     font-size: ${RFValue(24)}px;
     color: ${({ theme }) => theme.colors.black};
     font-family: ${({ theme }) => theme.fonts.extra_bold};
+    text-transform: capitalize;
 `;
 
 
@@ -156,8 +157,9 @@ export const PokemonInfoText = styled.Text<IPokemonInfoText>`
     padding: 0;
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.black};
+    text-transform: capitalize;
 
-    ${({ pokemonTypes, theme, type='no' }) => pokemonTypes ? css`
+    ${({ pokemonTypes, theme, type = 'no' }) => pokemonTypes ? css`
         font-family: ${theme.fonts.bold};
         color:${setBackGroundColorByType(type!).textColor};
         background-color: ${setBackGroundColorByType(type!).color};
@@ -169,7 +171,7 @@ export const PokemonInfoText = styled.Text<IPokemonInfoText>`
         font-family: ${theme.fonts.semi_bold};
     `}
 
-    ${({ability }) => ability && css`
+    ${({ ability }) => ability && css`
         font-size: ${RFValue(16)}px;
         padding-right: ${RFValue(6)}px;
         margin-right: ${RFValue(6)}px;
@@ -178,7 +180,7 @@ export const PokemonInfoText = styled.Text<IPokemonInfoText>`
 
         `}
 
-        ${({moves, theme}) => moves && css`
+        ${({ moves, theme }) => moves && css`
         font-size: ${RFValue(16)}px;
         border-radius: ${RFValue(6)}px;
 

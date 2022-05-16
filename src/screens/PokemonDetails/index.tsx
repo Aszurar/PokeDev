@@ -8,7 +8,6 @@ import { useRoute } from '@react-navigation/native';
 import { Header } from '../../components/Header';
 import { PokemonDTO } from '../../dtos/PokemonDTO';
 import { api } from '../../services/api';
-import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
 import {
     CardInfoContainer,
@@ -342,7 +341,7 @@ export function PokemonDetails() {
                                                         includeFontPadding: false,
                                                     }}
                                                 >
-                                                    {capitalizeFirstLetter(detailsData.name)}
+                                                    {detailsData.name}
                                                 </PokemonName>
                                             )}
                                     </LabelContainer>
@@ -441,7 +440,7 @@ export function PokemonDetails() {
                                                             includeFontPadding: false,
                                                         }}
                                                     >
-                                                        {speciesData.habitat ? capitalizeFirstLetter(speciesData.habitat.name) : ''}
+                                                        {speciesData.habitat ? speciesData.habitat.name : ''}
                                                     </PokemonInfoText>
                                                 </PokemonTypesContainer>
                                             )
@@ -564,7 +563,7 @@ export function PokemonDetails() {
                                                     }}
                                                     ability
                                                 >
-                                                    {capitalizeFirstLetter(ability.name)}
+                                                    {(ability.name)}
                                                 </PokemonInfoText>
                                             ))
                                         }
@@ -603,7 +602,7 @@ export function PokemonDetails() {
                                                     }}
                                                     moves
                                                 >
-                                                    {capitalizeFirstLetter(move.name)}
+                                                    {(move.name)}
                                                 </PokemonInfoText>
                                             ))
                                         }

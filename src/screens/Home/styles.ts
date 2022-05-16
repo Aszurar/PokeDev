@@ -67,7 +67,6 @@ export const ErrorText = styled.Text`
 `;
 
 export const PokemonListContainer = styled.View`
-    flex: 1;
     margin-bottom: ${getBottomSpace()}px;
     padding: 0 ${RFValue(21)}px;
 `;

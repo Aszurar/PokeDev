@@ -14,8 +14,6 @@ import {
     SubHeaderContainer,
     SubHeaderTitle
 } from './styles';
-import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
-
 
 interface IHeader {
     title: string;
@@ -50,7 +48,7 @@ export function Header({
                 }
 
                 {!isLoading ? (
-                    <HeaderTitle>{capitalizeFirstLetter(title)}</HeaderTitle>
+                    <HeaderTitle>{title}</HeaderTitle>
                 )
                     :
                     (

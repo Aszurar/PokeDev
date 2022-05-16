@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-native-modal';
-import LottieView from 'lottie-react-native';
-import pokeballAnimation from '../../assets/pokeball.json';
 import { useTheme } from 'styled-components/native';
-import { ChevronsDown, XCircle } from 'react-native-feather';
+import { ChevronsDown } from 'react-native-feather';
 import {
-    CloseButton,
-    CloseButtonContainer,
-    Container, HeadeContainer, ListContainer, ModalContainer, Title
+    Container,
+    ListContainer,
+    LoadContainer,
+    ModalContainer,
 } from './styles';
-import { RFValue } from 'react-native-responsive-fontsize';
 import { MovesList } from '../MovesList';
-import { Header } from '../Header';
+import { MoveDetailsModal } from '../MoveDetailsModal';
+import { HeaderModal } from '../HeaderModal';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { PokeballLoad } from '../PokeballLoad';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 interface IModal {
     onOpen: () => void;
@@ -32,6 +34,18 @@ const defaultMovesData = [{
         url: ''
     }
 }]
+
+
+export interface IMoveInfo {
+    name: string;
+    url: string;
+}
+
+const defaultMoveInfo: IMoveInfo = {
+    name: "",
+    url: "",
+}
+
 export function MovesModal({
     onClose,
     isVisible,
@@ -41,6 +55,19 @@ export function MovesModal({
 }: IModal) {
 
     const theme = useTheme();
+    const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+    const [moveInfo, setMoveInfo] = useState<IMoveInfo>(defaultMoveInfo);
+
+    function handleOpenMoveDetailsModal() {
+        setIsDetailsVisible(true);
+    }
+    function handleCloseMoveDetailsModal() {
+        setIsDetailsVisible(false);
+    }
+
+    function handleSetMoveInfo(moveInfo: IMoveInfo) {
+        setMoveInfo(moveInfo);
+    }
 
     return (
         <Container>
@@ -60,53 +87,44 @@ export function MovesModal({
                 style={{ width: '100%', alignSelf: 'center', justifyContent: 'flex-end' }}
             >
                 <ModalContainer>
-
-                    <CloseButtonContainer
-                    >
-                        <CloseButton onPress={onClose}>
-                            <ChevronsDown color={theme.colors.shape}
-                                height={RFValue(36)}
-                                width={RFValue(36)}
-                            />
-                        </CloseButton>
-                    </CloseButtonContainer>
-
-
-                    <CloseButtonContainer
-                        side="left"
-                    >
-                        <CloseButton onPress={onClose}>
-                            <ChevronsDown color={theme.colors.shape}
-                                height={RFValue(36)}
-                                width={RFValue(36)}
-                            />
-                        </CloseButton>
-                    </CloseButtonContainer>
-
-                    <HeadeContainer>
-                        <Title>Todos Movimentos</Title>
-                    </HeadeContainer>
+                    <HeaderModal
+                        onClose={onClose}
+                        icon={ChevronsDown}
+                        title={'Todos Movimentos'}
+                        iconColor={theme.colors.shape}
+                        titleColor={theme.colors.shape}
+                        backgroundColor={theme.colors.danger}
+                        borderColor={theme.colors.shape}
+                    />
 
                     {!isLoading ? (
                         <ListContainer>
                             <MovesList
                                 moves={movesData}
+                                onDetailsOpen={handleOpenMoveDetailsModal}
+                                handleSetMoveInfo={handleSetMoveInfo}
                             />
                         </ListContainer>
                     ) :
                         (
-                            <LottieView
-                                source={pokeballAnimation}
-                                style={{ height: '50%', alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}
-                                resizeMode="contain"
-                                autoPlay
-                                loop
-                            />
+                            <LoadContainer>
+                                <PokeballLoad
+                                    width={RFValue(160)}
+                                />
+                            </LoadContainer>
                         )
                     }
                 </ModalContainer>
 
-            </Modal>
+            </Modal >
+
+            <MoveDetailsModal
+                moveInfo={moveInfo}
+                isVisible={isDetailsVisible}
+                onOpen={handleOpenMoveDetailsModal}
+                onClose={handleCloseMoveDetailsModal}
+            />
+
         </Container >
     );
 }
