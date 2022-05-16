@@ -1,14 +1,12 @@
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
-import { setBackGroundColorByType } from '../../utils/setBackGroundColorByType';
+import { setColorandIconByType } from '../../utils/setColorandIconByType';
 
 export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.shape};
 `;
-
-
 
 export const ErrorComponent = styled.View`
     height: 100%;
@@ -161,8 +159,8 @@ export const PokemonInfoText = styled.Text<IPokemonInfoText>`
 
     ${({ pokemonTypes, theme, type = 'no' }) => pokemonTypes ? css`
         font-family: ${theme.fonts.bold};
-        color:${setBackGroundColorByType(type!).textColor};
-        background-color: ${setBackGroundColorByType(type!).color};
+        /* color:${(type!)}; */
+        background-color: ${setColorandIconByType(type!).color};
         border-radius: ${RFValue(6)}px;
         margin-top: ${RFValue(2)}px;
         margin-right: ${RFValue(6)}px;

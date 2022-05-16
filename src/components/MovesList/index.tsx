@@ -1,4 +1,6 @@
 import React from 'react';
+import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Card } from '../Card';
 import { IMoveInfo } from '../MovesModal';
 
@@ -26,13 +28,20 @@ export function MovesList({ moves, onDetailsOpen, handleSetMoveInfo }: IMoveList
             renderItem={({ item }) => {
                 const { move } = item;
                 return (
-                    <Card
-                        name={move.name}
-                        moveURL={move.url}
-                        moveList
-                        onDetailsOpen={onDetailsOpen}
-                        handleSetMoveInfo={handleSetMoveInfo}
-                    />
+                    <View
+                        style={{ flex: 1 }}
+                        onStartShouldSetResponder={() => true}
+                    >
+                        <GestureHandlerRootView>
+                            <Card
+                                name={move.name}
+                                moveURL={move.url}
+                                moveList
+                                onDetailsOpen={onDetailsOpen}
+                                handleSetMoveInfo={handleSetMoveInfo}
+                            />
+                        </GestureHandlerRootView>
+                    </View>
                 )
             }}
             ItemSeparatorComponent={() => <Separator />}

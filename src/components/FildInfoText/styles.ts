@@ -5,7 +5,8 @@ interface IContainer {
 }
 
 export const Container = styled.View<IContainer>`
-    ${({rowDirection}) => rowDirection && css`
+    ${({ rowDirection }) => rowDirection && css`
         flex-direction: row;
+        align-items: center;
     `}
 `;

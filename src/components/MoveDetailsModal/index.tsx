@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
-import LottieView from 'lottie-react-native';
-import pokeballAnimation from '../../assets/pokeball.json';
 import { useTheme } from 'styled-components/native';
 import { ChevronsRight } from 'react-native-feather';
 import {
@@ -17,6 +15,9 @@ import { api } from '../../services/api';
 import { MoveDTO } from '../../dtos/MoveDTO';
 import { FildInfoText } from '../FildInfoText';
 import { HeaderModal } from '../HeaderModal';
+import { ISetColorandIconByTypeReturn, setColorandIconByType } from '../../utils/setColorandIconByType';
+import { ScrollView, View } from 'react-native';
+import { PokeballLoad } from '../PokeballLoad';
 
 interface IModal {
     isVisible: boolean;
@@ -79,6 +80,9 @@ export function MoveDetailsModal({
     const [describe, setDescribe] = useState("");
     const [effect, setEffect] = useState("");
 
+    const [typeProps, setTypeProps] = useState<ISetColorandIconByTypeReturn>(setColorandIconByType("") as ISetColorandIconByTypeReturn);
+    const { icon: Icon, color } = typeProps;
+
     useEffect(() => {
         async function loadMoveInfo() {
             setisLoading(true);
@@ -95,11 +99,13 @@ export function MoveDetailsModal({
                     .find(item => item.language.name === "en")!
                     .effect);
 
+                setTypeProps(setColorandIconByType(data.type.name));
                 setisLoading(false);
             } catch (err) {
                 console.log(err);
             } finally {
                 setisLoading(false);
+
             }
         }
         loadMoveInfo();
@@ -108,18 +114,24 @@ export function MoveDetailsModal({
     return (
         <Container>
             <Modal
+                swipeThreshold={200}
+                backdropOpacity={0.5}
                 isVisible={isVisible}
+                onSwipeCancel={onOpen}
                 animationInTiming={700}
                 animationOutTiming={700}
+                propagateSwipe
+                onSwipeComplete={onClose}
+                swipeDirection={['right']}
+                useNativeDriverForBackdrop
                 animationIn={"fadeInLeftBig"}
                 animationOut={"fadeOutRightBig"}
-                backdropOpacity={0.5}
-                swipeDirection={['right']}
-                swipeThreshold={200}
-                onSwipeComplete={onClose}
-                onSwipeCancel={onOpen}
-                useNativeDriverForBackdrop
-                style={{ width: '100%', alignSelf: 'center', justifyContent: 'flex-end' }}
+                style={{
+                    margin: 0,
+                    width: '100%',
+                    alignSelf: 'center',
+                    justifyContent: 'flex-end'
+                }}
             >
                 <ModalContainer>
                     <HeaderModal
@@ -127,84 +139,106 @@ export function MoveDetailsModal({
                         icon={ChevronsRight}
                         iconColor={theme.colors.black}
                         titleColor={theme.colors.black}
+                        borderColor={theme.colors.black}
                         backgroundColor={theme.colors.shape}
                         title={moveInfo.name.replace("-", " ")}
                     />
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <Main
+                            onStartShouldSetResponder={() => true}
+                        >
+                            <HeaderMain>
+                                {!isLoading ?
+                                    <View style={{
+                                        backgroundColor: color, borderRadius: 25,
+                                        alignItems: "center", justifyContent: "center",
+                                        width: RFValue(40), height: RFValue(40),
+                                        // marginTop: RFValue(6)
+                                    }}>
+                                        <Icon
+                                            width={RFValue(24)}
+                                            height={RFValue(24)}
+                                        />
+                                    </View> :
+                                    <PokeballLoad
+                                        width={RFValue(40)}
+                                    />
 
-                    <Main>
-                        <HeaderMain>
-                            <FildInfoText
-                                label="Tipo:"
-                                isTextWrap
-                                textField='type'
-                                isLoading={isLoading}
-                                text={moveData.type.name}
-                                widthInPercentageLoad={RFValue(75)}
-                            />
+                                }
+                                <FildInfoText
+                                    label="Tipo:"
+                                    isTextWrap
+                                    textField='type'
+                                    typeColor={color}
+                                    isLoading={isLoading}
+                                    text={moveData.type.name}
+                                    widthInPercentageLoad={RFValue(75)}
+                                />
 
-                            <FildInfoText
-                                label="Poder:"
-                                alignText={moveData.power === null ? 'center' : 'flex-end'}
-                                isTextWrap
-                                isLoading={isLoading}
-                                widthInPercentageLoad={RFValue(60)}
-                                textField={moveData.power === null ? "" : 'status'}
-                                text={moveData.power === null ? "-" : String(moveData.power)}
-                            />
+                                <FildInfoText
+                                    label="Poder:"
+                                    alignText={'center'}
+                                    isTextWrap
+                                    isLoading={isLoading}
+                                    widthInPercentageLoad={RFValue(60)}
+                                    textField={moveData.power === null ? "" : 'status'}
+                                    text={moveData.power === null ? "-" : String(moveData.power)}
+                                />
 
-                            <FildInfoText
-                                label="PP:"
-                                alignText='flex-end'
-                                isTextWrap
-                                textField='status'
-                                isLoading={isLoading}
-                                text={String(moveData.pp)}
-                                widthInPercentageLoad={RFValue(60)}
-                            />
+                                <FildInfoText
+                                    label="PP:"
+                                    alignText={'center'}
+                                    isTextWrap
+                                    textField='status'
+                                    isLoading={isLoading}
+                                    text={String(moveData.pp)}
+                                    widthInPercentageLoad={RFValue(60)}
+                                />
 
-                            <FildInfoText
-                                label="Precisão:"
-                                alignText={moveData.accuracy === null ? 'center' : 'flex-end'}
-                                isTextWrap
-                                textField={moveData.accuracy === null ? "" : 'status'}
-                                isLoading={isLoading}
-                                text={moveData.accuracy === null ? "-" : String(moveData.accuracy) + "%"}
-                                widthInPercentageLoad={RFValue(75)}
-                            />
-                        </HeaderMain>
-                        <FieldTextContainer>
-                            <FildInfoText
-                                rowDirection
-                                textField={moveData.damage_class ? "status" : ""}
-                                isLoading={isLoading}
-                                label="Tipo de Movimento:"
-                                widthInPercentageLoad={100}
-                                text={moveData.damage_class ? moveData.damage_class.name : "-"}
-                            />
-                        </FieldTextContainer>
+                                <FildInfoText
+                                    label="Precisão:"
+                                    alignText={'center'}
+                                    isTextWrap
+                                    textField={moveData.accuracy === null ? "" : 'status'}
+                                    isLoading={isLoading}
+                                    text={moveData.accuracy === null ? "-" : String(moveData.accuracy) + "%"}
+                                    widthInPercentageLoad={RFValue(75)}
+                                />
+                            </HeaderMain>
+                            <FieldTextContainer style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <FildInfoText
+                                    rowDirection
+                                    textField={moveData.damage_class ? "status" : ""}
+                                    isLoading={isLoading}
+                                    label="Tipo de Movimento:"
+                                    widthInPercentageLoad={100}
+                                    text={moveData.damage_class ? moveData.damage_class.name : "-"}
+                                />
+                            </FieldTextContainer>
+                            <FieldTextContainer>
+                                <FildInfoText
+                                    label="Descrição:"
+                                    isTextWrap
+                                    isLoading={isLoading}
+                                    text={describe.replace(/\n/g, " ").replace(/\n\n/g, "\n")}
+                                    widthInPercentageLoad={100}
+                                />
+                            </FieldTextContainer>
 
-                        <FieldTextContainer>
-                            <FildInfoText
-                                label="Descrição:"
-                                isTextWrap
-                                isLoading={isLoading}
-                                text={describe.replace(/\n/g, " ").replace(/\n\n/g, "\n")}
-                                widthInPercentageLoad={100}
-                            />
-                        </FieldTextContainer>
-
-
-                        <FieldTextContainer>
-                            <FildInfoText
-                                label="Efeito(s):"
-                                isTextWrap
-                                isLoading={isLoading}
-                                text={effect.replace(/\$effect_chance/g,
-                                    String(moveData.effect_chance)).replace(/\n/g, " ").replace(/\n\n/g, "\n")}
-                                widthInPercentageLoad={100}
-                            />
-                        </FieldTextContainer>
-                    </Main>
+                            <FieldTextContainer >
+                                <FildInfoText
+                                    label="Efeito(s):"
+                                    isTextWrap
+                                    isLoading={isLoading}
+                                    text={effect.replace(/\$effect_chance/g,
+                                        String(moveData.effect_chance))}
+                                    widthInPercentageLoad={100}
+                                />
+                            </FieldTextContainer>
+                        </Main>
+                    </ScrollView>
                 </ModalContainer>
             </Modal>
         </Container >

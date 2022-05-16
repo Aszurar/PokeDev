@@ -1,5 +1,4 @@
 import React from 'react';
-import { ViewProps } from 'react-native';
 import { InfoText } from '../InfoText';
 import { LabelText } from '../LabelText';
 import { SkeletonTextLoad } from '../SkeletonTextLoad';
@@ -11,17 +10,19 @@ import {
 interface IFieldInfoText {
     text: string;
     label: string;
-    alignText?: "center" | "flex-start" | "flex-end";
+    typeColor?: string;
     isLoading: boolean;
     isTextWrap?: boolean;
     rowDirection?: boolean;
     widthInPercentageLoad: number;
+    alignText?: "center" | "flex-start" | "flex-end";
     textField?: "status" | "" | "type" | "ability" | "moves";
 }
 
 export function FildInfoText({
     text,
     label,
+    typeColor,
     alignText,
     textField,
     isLoading,
@@ -38,13 +39,16 @@ export function FildInfoText({
             {isLoading ?
                 (<SkeletonTextLoad width={widthInPercentageLoad} />)
                 :
-                (<InfoText
-                    text={text}
-                    wrap={isTextWrap}
-                    textFild={textField}
-                    alignText={alignText}
-                    rowDirection={rowDirection}
-                />)
+                (
+                    <InfoText
+                        text={text}
+                        wrap={isTextWrap}
+                        typeColor={typeColor}
+                        textFild={textField}
+                        alignText={alignText}
+                        rowDirection={rowDirection}
+                    />
+                )
             }
         </Container>
     );

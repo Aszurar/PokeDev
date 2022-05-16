@@ -44,12 +44,9 @@ import { useTheme } from 'styled-components/native';
 import { MovesModal } from '../../components/MovesModal';
 import { EvolutionDTO } from '../../dtos/EvolutionDTO';
 import { EvolutionsModal } from '../../components/EvolutionsModal';
-
 interface Params {
     name: string;
 }
-
-
 interface IDescribe {
     flavor_text: string;
     language: {
@@ -59,6 +56,7 @@ interface IDescribe {
         name: string;
     }
 }
+
 
 const defaultDescribeValue = {
     flavor_text: '',

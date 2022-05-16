@@ -7,7 +7,6 @@ import { useTheme } from 'styled-components/native';
 import {
     Container,
     InfoContainer,
-    ModalButtonContainer,
     Title
 } from './styles';
 import { IMoveInfo } from '../MovesModal';
@@ -30,19 +29,47 @@ export function Card({
     const theme = useTheme();
     const navigation = useNavigation<any>();
 
+    function handleNavigateToMoveDetails() {
+        onDetailsOpen();
+        handleSetMoveInfo({ name, url: moveURL })
+    }
+
+    function handleNavigateToPokemonDetails() {
+        navigation.navigate('PokemonDetails', { name })
+    }
+
     return (
         <Container>
+
+            <InfoContainer
+                onPress={() => moveList ? handleNavigateToMoveDetails() : handleNavigateToPokemonDetails()}
+                moveList={moveList}
+            >
+                <Title moveList={moveList}>{moveList ? name.replace('-', ' ') : name}</Title>
+                <ChevronRight
+                    width={RFValue(24)}
+                    height={RFValue(24)}
+                    stroke={moveList ? theme.colors.shape : theme.colors.black}
+                    strokeWidth={2}
+                />
+            </InfoContainer>
+
+
+
+            {/*
+
             {moveList ?
                 <ModalButtonContainer
                     onPress={() => { onDetailsOpen(), handleSetMoveInfo({ name, url: moveURL }) }}
-                >
-                    <Title moveList={moveList}> {name}</Title>
-                    <ChevronRight
-                        width={RFValue(24)}
-                        height={RFValue(24)}
-                        stroke={theme.colors.black}
-                        strokeWidth={2}
-                    />
+                ><>
+                        <Title moveList={moveList}> {name.replace('-', ' ')}</Title>
+                        <ChevronRight
+                            width={RFValue(24)}
+                            height={RFValue(24)}
+                            stroke={theme.colors.black}
+                            strokeWidth={2}
+                        />
+                    </>
                 </ModalButtonContainer>
                 :
                 <InfoContainer
@@ -56,7 +83,7 @@ export function Card({
                         strokeWidth={2}
                     />
                 </InfoContainer>
-            }
+            } */}
         </Container >
     );
 }

@@ -72,19 +72,23 @@ export function MovesModal({
     return (
         <Container>
             <Modal
-                animationIn={"fadeInUpBig"}
-                animationOut={"fadeOutDownBig"}
+                swipeThreshold={200}
+                backdropOpacity={0.5}
+                isVisible={isVisible}
+                onSwipeCancel={onOpen}
                 animationInTiming={700}
                 animationOutTiming={700}
-                backdropColor={theme.colors.shape}
-                isVisible={isVisible}
-                hasBackdrop={false}
-                swipeDirection={['down']}
-                swipeThreshold={220}
                 onSwipeComplete={onClose}
-                onSwipeCancel={onOpen}
+                swipeDirection={['down']}
                 useNativeDriverForBackdrop
-                style={{ width: '100%', alignSelf: 'center', justifyContent: 'flex-end' }}
+                animationIn={"fadeInUpBig"}
+                animationOut={"fadeOutDownBig"}
+                style={{
+                    margin: 0,
+                    width: '100%',
+                    alignSelf: 'center',
+                    justifyContent: 'flex-end'
+                }}
             >
                 <ModalContainer>
                     <HeaderModal

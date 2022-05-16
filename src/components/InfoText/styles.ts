@@ -1,11 +1,18 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
-import { setBackGroundColorByType } from '../../utils/setBackGroundColorByType';
 
 
-interface IInfoText {
+interface IPokemonInfoText {
+    ability?: boolean;
+    moves?: boolean;
+    textFild?: "ability" | "type" | "moves" | "status" | "";
+}
+
+interface IInfoText extends IPokemonInfoText {
     wrap: boolean;
+    typeColor?: string;
     rowDirection?: boolean;
+
 };
 
 export const Container = styled.View<IInfoText>`
@@ -15,47 +22,49 @@ export const Container = styled.View<IInfoText>`
     `};
     ${({ rowDirection }) => rowDirection && css`
         margin-left: ${RFValue(6)}px;
+    `};
+
+    ${({ theme, textFild = "", typeColor }) => textFild === "type" &&
+        css`
+            color:${theme.colors.shape};
+            background-color: ${typeColor};
+            border-radius: ${RFValue(6)}px;
+            /* margin-top: ${RFValue(2)}px;
+            margin-right: ${RFValue(6)}px; */
+            padding: 0 ${RFValue(8)}px;
+    `};
+
+
+    ${({ theme, textFild = "" }) => textFild === "status" &&
+        css`
+            background-color: ${theme.colors.black};
+            border-radius: ${RFValue(6)}px;
+            padding: 0 ${RFValue(8)}px;
+
     `}
 `;
 
-interface IPokemonInfoText {
-    ability?: boolean;
-    type?: string;
-    moves?: boolean;
-    textFild?: "ability" | "type" | "moves" | "status" | "";
-}
 
 export const Title = styled.Text<IPokemonInfoText>`
-    margin: 0;
-    padding: 0;
-    align-items: center;
-    /* justify-content: flex-end; */
     font-size: ${RFValue(14)}px;
+    text-align: justify;
     color: ${({ theme }) => theme.colors.black};
 
-    ${({theme, type = "", textFild = "" }) => type !=="" && textFild === "type" &&
+    ${({ theme, textFild = "" }) => textFild === "type" &&
         css`
             font-family: ${theme.fonts.bold};
-            color:${setBackGroundColorByType(type).textColor};
-            background-color: ${setBackGroundColorByType(type).color};
-            border-radius: ${RFValue(6)}px;
-            margin-top: ${RFValue(2)}px;
-            margin-right: ${RFValue(6)}px;
-            padding: 0 ${RFValue(8)}px;
+            color:${theme.colors.shape};
             text-transform: uppercase;
     `}
 
 
-    ${({theme, type = "", textFild = "" }) => type !=="" && textFild === "status" &&
+    ${({ theme, textFild = "" }) => textFild === "status" &&
         css`
             font-family: ${theme.fonts.bold};
             color:${theme.colors.shape};
-            background-color: ${theme.colors.black};
-            border-radius: ${RFValue(6)}px;
-            padding: 0 ${RFValue(8)}px;
     `}
 /*
-    ${({ability }) => ability && css`
+    ${({ ability }) => ability && css`
         font-size: ${RFValue(16)}px;
         padding-right: ${RFValue(6)}px;
         margin-right: ${RFValue(6)}px;
@@ -64,7 +73,7 @@ export const Title = styled.Text<IPokemonInfoText>`
 
         `}
 
-        ${({moves, theme}) => moves && css`
+        ${({ moves, theme }) => moves && css`
         font-size: ${RFValue(16)}px;
         border-radius: ${RFValue(6)}px;
 
