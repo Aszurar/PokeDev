@@ -13,7 +13,7 @@ import { IMoveInfo } from '../MovesModal';
 
 interface ICard {
     name: string;
-    moveURL?: string;
+    url: string;
     moveList?: boolean;
     onDetailsOpen?(): void;
     handleSetMoveInfo?(moveInfo: IMoveInfo): void;
@@ -21,7 +21,7 @@ interface ICard {
 
 export function Card({
     name,
-    moveURL = "",
+    url,
     moveList = false,
     handleSetMoveInfo = () => { },
     onDetailsOpen = () => { }
@@ -31,11 +31,11 @@ export function Card({
 
     function handleNavigateToMoveDetails() {
         onDetailsOpen();
-        handleSetMoveInfo({ name, url: moveURL })
+        handleSetMoveInfo({ name, url })
     }
 
     function handleNavigateToPokemonDetails() {
-        navigation.navigate('PokemonDetails', { name })
+        navigation.navigate('PokemonDetails', { name, url })
     }
 
     return (
@@ -45,7 +45,7 @@ export function Card({
                 onPress={() => moveList ? handleNavigateToMoveDetails() : handleNavigateToPokemonDetails()}
                 moveList={moveList}
             >
-                <Title moveList={moveList}>{moveList ? name.replace('-', ' ') : name}</Title>
+                <Title moveList={moveList}>{name.replace('-', ' ')}</Title>
                 <ChevronRight
                     width={RFValue(24)}
                     height={RFValue(24)}

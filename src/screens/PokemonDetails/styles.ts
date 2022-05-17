@@ -8,32 +8,6 @@ export const Container = styled.View`
     background-color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const ErrorComponent = styled.View`
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-`;
-
-export const ErrorSearchContainer = styled.View`
-    position: absolute;
-    z-index: 1;
-    top: ${RFValue(72)}px;
-    padding: 0 ${RFValue(21)}px;
-
-    align-self: center;
-    justify-content: center;
-    align-items: center;
-`;
-
-export const ErrorText = styled.Text`
-    margin-top: ${RFValue(8)}px;
-    font-family: ${({ theme }) => theme.fonts.medium};
-    font-size: ${RFValue(16)}px;
-    color: ${({ theme }) => theme.colors.dark};
-    text-align: center;
-`;
-
-
 export const Main = styled.View`
     padding: 0 ${RFValue(21)}px;
 `;
@@ -95,7 +69,8 @@ export const EvolutionsButtonContainer = styled.View`
     height: ${RFValue(24)}px;
     width: ${RFValue(150)}px;
     align-self: center;
-    margin: ${RFValue(6)}px 0;
+    margin-top: ${RFValue(24)}px;
+    margin-bottom: ${RFValue(6)}px;
 `;
 export const EvolutionsButton = styled(BorderlessButton)`
     /* background-color: ${({ theme }) => theme.colors.danger}; */
@@ -120,81 +95,17 @@ export const LabelContainer = styled.View`
     /* background-color: ${({ theme }) => theme.colors.danger}; */
 `;
 
-export const LabelText = styled.Text`
-    margin: 0;
-    padding: 0;
-    font-size: ${RFValue(12)}px;
-    color: ${({ theme }) => theme.colors.medium};
-    font-family: ${({ theme }) => theme.fonts.regular};
-`;
-
-export const PokemonName = styled.Text`
-    margin: 0;
-    padding: 0;
-    font-size: ${RFValue(24)}px;
-    color: ${({ theme }) => theme.colors.black};
-    font-family: ${({ theme }) => theme.fonts.extra_bold};
-    text-transform: capitalize;
-`;
-
 
 export const PokemonTypesContainer = styled.View`
     flex-direction: row;
     flex-wrap: wrap;
 `;
 
-interface IPokemonInfoText {
-    pokemonTypes?: boolean;
-    ability?: boolean;
-    type?: string;
-    moves?: boolean;
-}
-
-export const PokemonInfoText = styled.Text<IPokemonInfoText>`
-    margin: 0;
-    padding: 0;
-    font-size: ${RFValue(14)}px;
-    color: ${({ theme }) => theme.colors.black};
-    text-transform: capitalize;
-
-    ${({ pokemonTypes, theme, type = 'no' }) => pokemonTypes ? css`
-        font-family: ${theme.fonts.bold};
-        /* color:${(type!)}; */
-        background-color: ${setColorandIconByType(type!).color};
-        border-radius: ${RFValue(6)}px;
-        margin-top: ${RFValue(2)}px;
-        margin-right: ${RFValue(6)}px;
-        padding: 0 ${RFValue(8)}px;
-    ` : css`
-        font-family: ${theme.fonts.semi_bold};
-    `}
-
-    ${({ ability }) => ability && css`
-        font-size: ${RFValue(16)}px;
-        padding-right: ${RFValue(6)}px;
-        margin-right: ${RFValue(6)}px;
-        border-right-width: ${RFValue(2)}px;
-
-
-        `}
-
-        ${({ moves, theme }) => moves && css`
-        font-size: ${RFValue(16)}px;
-        border-radius: ${RFValue(6)}px;
-
-        background-color: ${theme.colors.gray};
-        margin-top: ${RFValue(6)}px;
-        margin-right: ${RFValue(6)}px;
-        padding-top: ${RFValue(6)}px;
-        padding: 0 ${RFValue(12)}px;
-    `}
-`;
 
 export const DescriptionContainer = styled.View`
     margin-bottom: ${RFValue(16)}px;
     margin-top: ${RFValue(30)}px;
 `;
-
 
 
 export const MovesButton = styled(RectButton)`

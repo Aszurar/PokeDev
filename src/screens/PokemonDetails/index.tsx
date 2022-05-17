@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import LottieView from 'lottie-react-native';
-import skeletonTextAnimation from '../../assets/skeleton.json';
-import skeletonAnimation from '../../assets/skeletonImage.json';
-import pokeballAnimation from '../../assets/pokeball.json';
-import digletAnimation from '../../assets/diglet.json';
 import { useRoute } from '@react-navigation/native';
 import { Header } from '../../components/Header';
 import { PokemonDTO } from '../../dtos/PokemonDTO';
@@ -12,27 +7,21 @@ import { api } from '../../services/api';
 import {
     CardInfoContainer,
     Container,
-    ImageContainer,
-    InfoContainer,
-    Main,
-    LabelContainer,
-    LabelText,
-    PokemonImg,
-    PokemonName,
-    PokemonInfoText,
-    MeasurePokemonContainer,
-    ImageAndMeasureContainer,
-    PokemonTypesContainer,
     DescriptionContainer,
     FooterInfoContainer,
-    ErrorComponent,
-    ErrorSearchContainer,
-    ErrorText,
-    MovesButton,
-    TextMovesButton,
     EvolutionsButton,
     EvolutionsButtonText,
-    EvolutionsButtonContainer
+    EvolutionsButtonContainer,
+    ImageContainer,
+    ImageAndMeasureContainer,
+    InfoContainer,
+    LabelContainer,
+    Main,
+    MeasurePokemonContainer,
+    MovesButton,
+    PokemonImg,
+    PokemonTypesContainer,
+    TextMovesButton,
 } from './styles';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { formatMeasure } from '../../utils/formatMeasure';
@@ -40,12 +29,20 @@ import { ScrollView, View } from 'react-native';
 import { SpeciesDataDTO } from '../../dtos/SpeciesDataDTO';
 import { setRarity } from '../../utils/setRarity';
 import { XCircle } from 'react-native-feather';
-import { useTheme } from 'styled-components/native';
 import { MovesModal } from '../../components/MovesModal';
+import { ErrorComponent } from '../../components/ErrorComponent';
+import { Loader } from '../../components/Loader';
+import { FieldInfoText } from '../../components/FieldInfoText';
 import { EvolutionDTO } from '../../dtos/EvolutionDTO';
 import { EvolutionsModal } from '../../components/EvolutionsModal';
+import { LabelText } from '../../components/LabelText';
+import { InfoText } from '../../components/InfoText';
+import { setColorandIconByType } from '../../utils/setColorandIconByType';
+import { SvgProps } from 'react-native-svg';
+import { IconTyoe } from '../../components/IconTyoe';
 interface Params {
     name: string;
+    url: string
 }
 interface IDescribe {
     flavor_text: string;
@@ -57,6 +54,10 @@ interface IDescribe {
     }
 }
 
+interface IIconType {
+    icon: React.FC<SvgProps>;
+    color: string;
+}
 
 const defaultDescribeValue = {
     flavor_text: '',
@@ -92,23 +93,25 @@ const defaultEvolutionData = {
 
 export function PokemonDetails() {
     const route = useRoute();
-    const theme = useTheme();
 
-    const { name } = route.params as Params;
+    const { name: pokemonName, url: detailsRoute } = route.params as Params;
     const [detailsData, setDetailsData] = useState<PokemonDTO>({} as PokemonDTO);
     const [speciesData, setSpeciesData] = useState<SpeciesDataDTO>({} as SpeciesDataDTO)
     const [describe, setDescribe] = useState<IDescribe>(defaultDescribeValue as IDescribe);
-    const [evolutionsData, setEvolutionsData] = useState(defaultEvolutionData as EvolutionDTO);
+    // const [evolutionsData, setEvolutionsData] = useState(defaultEvolutionData as EvolutionDTO);
 
+
+    const iconData: IIconType[] = []
+    const [typeProps, setTypeProps] = useState<IIconType[]>(iconData as IIconType[]);
     const [isErrored, setisErrored] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
     const [isSpeciesDetailsLoading, setIsSpeciesDetailsLoading] = useState(true);
-    const [isEvolutionsDataLoading, setIsEvolutionsDataLoading] = useState(true);
+    // const [isEvolutionsDataLoading, setIsEvolutionsDataLoading] = useState(true);
 
 
     const [isMovesVisible, setIsMovesVisible] = useState(false);
-    const [isEvolutionVisible, setIsEvolutionVisible] = useState(false);
+    // const [isEvolutionVisible, setIsEvolutionVisible] = useState(false);
 
     function handleOpenMovesModal() {
         setIsMovesVisible(true);
@@ -117,25 +120,42 @@ export function PokemonDetails() {
     function handleCloseModal() {
         setIsMovesVisible(false);
     }
-    function handleOpenEvolutionsModal() {
-        setIsEvolutionVisible(true);
-    }
-    function handleCloseEvolutionsModal() {
-        setIsEvolutionVisible(false);
-    }
+
+    // Funcionalidade de evolução incompleta
+    // function handleOpenEvolutionsModal() {
+    //     setIsEvolutionVisible(true);
+    // }
+    // function handleCloseEvolutionsModal() {
+    //     setIsEvolutionVisible(false);
+    // }
+    // Funcionalidade de Evolução não deu tempo para finalizar...
+    // async function loadEvolutionsData() {
+    //     setIsEvolutionsDataLoading(true);
+    //     try {
+    //         const evolutionWithID = speciesData.evolution_chain.url.split('v2/')[1];
+    //         const response = await api.get(`${evolutionWithID}`);
+    //         const data = response.data;
+    //         setEvolutionsData(data);
+
+    //     } catch (err) {
+    //         console.log(err);
+    //     } finally {
+    //         setIsEvolutionsDataLoading(false);
+    //     }
+    // }
 
 
     async function loadPokemonSpecieDetails() {
+        setisErrored(false);
         setIsSpeciesDetailsLoading(true);
         try {
-            const pokemonID = detailsData.species.url.split('/')[6];
-            console.log("==========>", pokemonID);
-            const response = await api.get(`/pokemon-species/${pokemonID}`);
+            const specieRouteWithID = detailsData.species.url.split('v2/')[1];
+            const response = await api.get(`${specieRouteWithID}`);
             const data = response.data as SpeciesDataDTO;
             setSpeciesData(data);
 
-            setDescribe(data.flavor_text_entries.find(({ language }) => language.name === 'en')!)
-            setisErrored(false);
+            setDescribe(data.flavor_text_entries.reverse()
+                .find(({ language }) => language.name === 'en')!)
         } catch (err) {
             setisErrored(true);
             console.log(err);
@@ -143,45 +163,22 @@ export function PokemonDetails() {
             setIsSpeciesDetailsLoading(false);
         }
     }
-    async function loadEvolutionsData() {
-        setIsEvolutionsDataLoading(true);
-        try {
-            const evolutionID = speciesData.evolution_chain.url.split('/')[6];
-            console.log("==========>", evolutionID);
-            const response = await api.get(`/evolution-chain/${evolutionID}`);
-            const data = response.data;
-            setEvolutionsData(data);
 
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setIsEvolutionsDataLoading(false);
-            // if (!isEvolutionsDataLoading) {
 
-            //     console.log("==========>", evolutionsData);
-
-            //     evolutionsData.chain.evolves_to.map(({ species, evolves_to }) => {
-            //         console.log("==========>", species.name);
-            //         evolves_to.map(({ species }) => {
-            //             console.log("====evolucao2======>", species.name);
-            //         }
-            //         )
-            //     })
-            // }
-
-        }
-    }
 
     useEffect(() => {
         async function loadPokemonDetailsData() {
+            setisErrored(false);
             setIsLoading(true);
             try {
-                const response = await api.get(`/pokemon/${name}`);
+                const detailsRouteWithID = detailsRoute.split('v2/')[1];
+                const response = await api.get(`${detailsRouteWithID}`);
                 const data = response.data;
                 setDetailsData(data);
 
             } catch (err) {
                 console.log(err);
+                setisErrored(true);
             } finally {
                 setIsLoading(false);
 
@@ -194,8 +191,9 @@ export function PokemonDetails() {
 
     useEffect(() => {
         if (!isLoading) {
+            setTypeProps(iconData);
             loadPokemonSpecieDetails();
-            loadEvolutionsData();
+            // loadEvolutionsData();
         }
     }, [isLoading])
 
@@ -206,457 +204,314 @@ export function PokemonDetails() {
                 subtitle='Detalhes do Pokémon'
                 isBackButtonAvailable
             />
-
-            {isErrored ?
-                (
-                    <ErrorComponent>
-                        <ErrorSearchContainer>
-                            <XCircle
-                                width={RFValue(100)}
-                                height={RFValue(100)}
-                                color={theme.colors.dark}
-                                strokeWidth={2}
-                            />
-                            <ErrorText>
-                                Ocorreu um erro ao buscar o Pokémon, por favor, volte e tente novamente.
-                            </ErrorText>
-                        </ErrorSearchContainer>
-                        <LottieView
-                            source={digletAnimation}
-                            style={{ width: '100%', top: RFValue(29) }}
-                            resizeMode="contain"
-                            autoPlay
-                            loop
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                {isErrored ?
+                    (
+                        <ErrorComponent
+                            title="Ocorreu um erro ao buscar o Pokémon, por favor, volte e tente novamente."
+                            icon={XCircle}
                         />
-                    </ErrorComponent>
-                )
-                :
-                (
-                    <Main>
-                        {/* <ScrollView> */}
-                        <CardInfoContainer>
-                            <ImageAndMeasureContainer>
-                                <ImageContainer>
-                                    {isLoading ?
-                                        (
-                                            <LottieView
-                                                source={pokeballAnimation}
-                                                style={{ height: RFValue(64), width: RFValue(64) }}
-                                                resizeMode="contain"
-                                                autoPlay
-                                                loop
-                                            />
-                                        ) :
-                                        (
-                                            <PokemonImg
-                                                source={{ uri: detailsData.sprites.front_default }}
-                                            />
-                                        )
-                                    }
-                                </ImageContainer>
-
-                                <MeasurePokemonContainer>
-                                    <LabelContainer>
-                                        <LabelText
-                                            style={{
-                                                includeFontPadding: false,
-                                            }}
-                                        >Peso:</LabelText>
+                    )
+                    :
+                    (
+                        <Main>
+                            <CardInfoContainer>
+                                <ImageAndMeasureContainer>
+                                    <ImageContainer>
                                         {isLoading ?
                                             (
-                                                <LottieView
-                                                    source={skeletonTextAnimation}
-                                                    style={{ height: RFValue(18) }}
-                                                    resizeMode="contain"
-                                                    autoPlay
-                                                    loop
+                                                <Loader
+                                                    animationName='pokeball'
+                                                    width={RFValue(64)}
                                                 />
                                             ) :
                                             (
-                                                <PokemonInfoText
-                                                    style={{
-                                                        includeFontPadding: false,
-                                                    }}
-                                                    pokemonTypes={false}
-                                                >
-                                                    {formatMeasure(detailsData.weight, 'w')}
-                                                </PokemonInfoText>
-                                            )}
-                                    </LabelContainer>
-
-                                    <LabelContainer>
-                                        <LabelText
-                                            style={{
-                                                includeFontPadding: false,
-                                            }}
-                                        >Altura:</LabelText>
-                                        {isLoading ?
-                                            (
-                                                <LottieView
-                                                    source={skeletonTextAnimation}
-                                                    style={{ height: RFValue(18) }}
-                                                    resizeMode="contain"
-                                                    autoPlay
-                                                    loop
+                                                <PokemonImg
+                                                    source={{ uri: detailsData.sprites.front_default }}
                                                 />
-                                            ) :
-                                            (
-                                                <PokemonInfoText
-                                                    style={{
-                                                        includeFontPadding: false,
-                                                    }}
-                                                >
-                                                    {formatMeasure(detailsData.height, 'h')}
-                                                </PokemonInfoText>
-                                            )}
-                                    </LabelContainer>
-                                </MeasurePokemonContainer>
-                            </ImageAndMeasureContainer>
-
-
-                            <InfoContainer>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <LabelContainer>
-                                        <LabelText
-                                            style={{
-                                                includeFontPadding: false,
-                                            }}
-
-                                        >Nome:</LabelText>
-                                        {isLoading ?
-                                            (
-                                                <LottieView
-                                                    source={skeletonTextAnimation}
-                                                    style={{ height: RFValue(42) }}
-                                                    resizeMode="contain"
-                                                    autoPlay
-                                                    loop
-                                                />
-                                            ) :
-                                            (
-                                                <PokemonName
-                                                    style={{
-                                                        includeFontPadding: false,
-                                                    }}
-                                                >
-                                                    {detailsData.name}
-                                                </PokemonName>
-                                            )}
-                                    </LabelContainer>
-
-                                    <LabelContainer style={{ flexDirection: 'row', position: 'absolute', right: 0 }}>
-                                        <LabelText
-                                            style={{
-                                                includeFontPadding: false,
-                                            }}
-
-                                        >Nº:</LabelText>
-                                        {isSpeciesDetailsLoading ?
-                                            (
-                                                <View style={{ borderRadius: RFValue(16) }}>
-                                                    <LottieView
-                                                        source={skeletonAnimation}
-                                                        style={{ left: RFValue(3), height: RFValue(18), }}
-                                                        resizeMode="contain"
-                                                        autoPlay
-                                                        loop
-                                                    />
-                                                </View>
-                                            ) :
-                                            (
-                                                <PokemonInfoText
-                                                    style={{
-                                                        includeFontPadding: false,
-                                                    }}
-                                                >
-                                                    {String(' ' + speciesData.id)}
-                                                </PokemonInfoText>
-                                            )}
-                                    </LabelContainer>
-                                </View>
-
-                                <LabelContainer>
-                                    <LabelText
-                                        style={{
-                                            includeFontPadding: false,
-                                        }}
-                                    >Tipo:</LabelText>
-                                    {isLoading ?
-                                        (
-                                            <LottieView
-                                                source={skeletonTextAnimation}
-                                                style={{ width: '50%' }}
-                                                resizeMode="contain"
-                                                autoPlay
-                                                loop
-                                            />
-                                        ) :
-
-                                        (
-                                            <PokemonTypesContainer>
-                                                {
-                                                    detailsData.types.map(({ type }, index) => (
-                                                        <PokemonInfoText
-                                                            key={index}
-                                                            style={{
-                                                                includeFontPadding: false,
-                                                            }}
-                                                            pokemonTypes
-                                                            type={type.name}
-                                                        >
-                                                            {type.name.toUpperCase()}
-                                                        </PokemonInfoText>
-                                                    ))
-                                                }
-                                            </PokemonTypesContainer>
-                                        )
-                                    }
-                                </LabelContainer>
-
-                                <FooterInfoContainer>
-                                    <LabelContainer >
-                                        <LabelText
-                                            style={{
-                                                includeFontPadding: false,
-                                            }}
-                                        >Habitat:</LabelText>
-                                        {isSpeciesDetailsLoading ?
-                                            (
-                                                <LottieView
-                                                    source={skeletonTextAnimation}
-                                                    style={{ width: '50%' }}
-                                                    resizeMode="contain"
-                                                    autoPlay
-                                                    loop
-                                                />
-                                            ) :
-
-                                            (
-                                                <PokemonTypesContainer>
-                                                    <PokemonInfoText
-                                                        style={{
-                                                            includeFontPadding: false,
-                                                        }}
-                                                    >
-                                                        {speciesData.habitat ? speciesData.habitat.name : ''}
-                                                    </PokemonInfoText>
-                                                </PokemonTypesContainer>
                                             )
                                         }
-                                    </LabelContainer>
+                                    </ImageContainer>
 
-                                    <LabelContainer>
-                                        <LabelText
-                                            style={{
-                                                includeFontPadding: false,
-                                            }}
-                                        >Raridade:</LabelText>
-                                        {isSpeciesDetailsLoading ?
-                                            (
-                                                <LottieView
-                                                    source={skeletonTextAnimation}
-                                                    style={{ width: '50%' }}
-                                                    resizeMode="contain"
-                                                    autoPlay
-                                                    loop
-                                                />
-                                            ) :
 
-                                            (
-                                                <PokemonTypesContainer>
-                                                    <PokemonInfoText
-                                                        style={{
-                                                            includeFontPadding: false,
-                                                        }}
-                                                    >
-                                                        {setRarity(speciesData)}
-                                                    </PokemonInfoText>
-                                                </PokemonTypesContainer>
-                                            )
-                                        }
-                                    </LabelContainer>
-                                </FooterInfoContainer>
 
-                                {!isEvolutionsDataLoading &&
-                                    (
-                                        <EvolutionsButtonContainer>
-                                            <EvolutionsButton
-                                                onPress={handleOpenEvolutionsModal}
+                                    <MeasurePokemonContainer>
+                                        <FieldInfoText
+                                            label='Peso:'
+                                            isLoading={isLoading}
+                                            widthLoad={RFValue(50)}
+                                            text={formatMeasure(detailsData.weight, 'w')}
+
+                                        />
+                                        <FieldInfoText
+                                            label='Altura:'
+                                            isLoading={isLoading}
+                                            widthLoad={RFValue(50)}
+                                            text={formatMeasure(detailsData.height, 'h')}
+                                        />
+                                    </MeasurePokemonContainer>
+                                    <LabelContainer style={{ flexDirection: 'row', marginTop: RFValue(14), justifyContent: "space-between" }}>
+                                        {isLoading ?
+                                            <View
+                                                style={{
+                                                    flexDirection: 'row',
+                                                    width: '100%',
+                                                    justifyContent: 'space-between',
+
+                                                }}
                                             >
-                                                <EvolutionsButtonText
-                                                    style={{
-                                                        includeFontPadding: false,
-                                                    }}
-                                                >
-                                                    Evoluções
-                                                </EvolutionsButtonText>
-                                            </EvolutionsButton>
-                                        </EvolutionsButtonContainer>
+                                                <Loader
+                                                    animationName='pokeball'
+                                                    width={RFValue(40)}
+                                                />
+                                                <Loader
+                                                    animationName='pokeball'
+                                                    width={RFValue(40)}
+                                                />
+                                            </View>
+                                            :
+                                            typeProps.map(({ icon: Icon, color }, index) => (
+                                                <IconTyoe
+                                                    key={index}
+                                                    icon={Icon}
+                                                    backgroundColor={color}
+                                                />
+                                            ))
+                                        }
+                                    </LabelContainer>
+                                </ImageAndMeasureContainer>
 
-                                    )
 
-                                }
-                            </InfoContainer>
-                        </CardInfoContainer>
+                                <InfoContainer>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <FieldInfoText
+                                            label='Nome:'
+                                            text={pokemonName}
+                                            isLoading={isLoading}
+                                            textField="pokemonName"
+                                            widthLoad={RFValue(160)}
+                                        />
+
+                                        <View style={{ position: 'absolute', right: 0 }}>
+
+                                            <FieldInfoText
+                                                label='Nº:'
+                                                rowDirection
+                                                isLoading={isSpeciesDetailsLoading}
+                                                widthLoad={RFValue(18)}
+                                                loadAnimaton="rectSkeleton"
+                                                text={String(' ' + speciesData.id)}
+                                            />
+
+                                        </View>
+                                    </View>
+
+                                    <LabelContainer>
+                                        <LabelText
+                                            label='Tipo(s):'
+                                        />
+
+                                        {isLoading ?
+                                            (
+                                                <Loader
+                                                    animationName='skeleton'
+                                                    width={RFValue(70)}
+                                                />
+                                            ) :
+
+                                            (
+                                                <PokemonTypesContainer>
+                                                    {
+                                                        detailsData.types.map(({ type }, index) => {
+                                                            const { color, icon } = setColorandIconByType(type.name);
+                                                            iconData.push({ icon, color });
+                                                            return (
+                                                                <InfoText
+                                                                    wrap
+                                                                    key={index}
+                                                                    rowDirection
+                                                                    textFild='type'
+                                                                    text={type.name}
+                                                                    typeColor={color}
+                                                                />
+                                                            )
+                                                        })
+                                                    }
+                                                </PokemonTypesContainer>
+                                            )
+                                        }
+                                    </LabelContainer>
 
 
-                        <DescriptionContainer>
-                            <LabelContainer>
+                                    <FooterInfoContainer>
+
+                                        <FieldInfoText
+                                            label='Habitat:'
+                                            capitalize
+                                            widthLoad={RFValue(70)}
+                                            isLoading={isSpeciesDetailsLoading}
+                                            alignText={speciesData.habitat ? "flex-start" : "center"}
+                                            text={speciesData.habitat ? speciesData.habitat.name : '-'}
+                                        />
+
+                                        <FieldInfoText
+                                            label='Raridade:'
+                                            capitalize
+                                            widthLoad={RFValue(70)}
+                                            isLoading={isSpeciesDetailsLoading}
+                                            text={setRarity(speciesData)}
+                                        />
+                                    </FooterInfoContainer>
+
+
+                                    <EvolutionsButtonContainer>
+                                        <EvolutionsButton
+                                            onPress={() => { }}
+                                        >
+                                            <EvolutionsButtonText
+                                                style={{
+                                                    includeFontPadding: false,
+                                                }}
+                                            >
+                                                Evoluções
+                                            </EvolutionsButtonText>
+                                        </EvolutionsButton>
+                                    </EvolutionsButtonContainer>
+
+                                </InfoContainer>
+                            </CardInfoContainer>
+
+
+                            <DescriptionContainer>
+                                <FieldInfoText
+                                    label='Descrição:'
+                                    isLoading={isSpeciesDetailsLoading}
+                                    widthLoad={RFValue(300)}
+                                    text={describe.flavor_text.replace(/\n/g, ' ')}
+                                />
+                            </DescriptionContainer>
+
+                            <LabelContainer style={{ marginBottom: RFValue(31) }}>
                                 <LabelText
-                                    style={{
-                                        includeFontPadding: false,
-                                    }}
-                                >Descrição:</LabelText>
-                                {isSpeciesDetailsLoading ?
+                                    label='Habilidades:'
+                                />
+                                {isLoading ?
                                     (
-                                        <LottieView
-                                            source={skeletonTextAnimation}
-                                            style={{ width: '80%' }}
-                                            resizeMode="contain"
-                                            autoPlay
-                                            loop
+                                        <Loader
+                                            animationName='skeleton'
+                                            width={RFValue(100)}
                                         />
                                     ) :
 
                                     (
                                         <PokemonTypesContainer>
-                                            <PokemonInfoText
-                                                style={{
-                                                    includeFontPadding: false,
-                                                }}
-                                            >
-                                                {describe.flavor_text.replace(/\n/g, ' ')}
-                                            </PokemonInfoText>
+                                            {
+                                                detailsData.abilities.map(({ ability }, index) => {
+                                                    return (
+                                                        <InfoText
+                                                            wrap
+                                                            key={index}
+                                                            rowDirection
+                                                            textFild='ability'
+                                                            text={ability.name}
+                                                        />
+                                                    )
+                                                })
+                                            }
                                         </PokemonTypesContainer>
                                     )
                                 }
                             </LabelContainer>
-                        </DescriptionContainer>
-
-                        <LabelContainer style={{ marginBottom: RFValue(31) }}>
-                            <LabelText
-                                style={{
-                                    includeFontPadding: false,
-                                }}
-                            >Habilidades:</LabelText>
-                            {isLoading ?
-                                (
-                                    <LottieView
-                                        source={skeletonTextAnimation}
-                                        style={{ width: '60%' }}
-                                        resizeMode="contain"
-                                        autoPlay
-                                        loop
-                                    />
-                                ) :
-
-                                (
-                                    <PokemonTypesContainer>
-                                        {
-                                            detailsData.abilities.map(({ ability }, index) => (
-                                                <PokemonInfoText
-                                                    key={index}
-                                                    style={{
-                                                        includeFontPadding: false,
-                                                    }}
-                                                    ability
-                                                >
-                                                    {(ability.name)}
-                                                </PokemonInfoText>
-                                            ))
-                                        }
-                                    </PokemonTypesContainer>
-                                )
-                            }
-                        </LabelContainer>
 
 
 
-                        <LabelContainer style={{ marginBottom: RFValue(31) }}>
-                            <LabelText
-                                style={{
-                                    includeFontPadding: false,
-                                }}
-                            >Movimentos:</LabelText>
-                            {isLoading ?
-                                (
-                                    <LottieView
-                                        source={skeletonTextAnimation}
-                                        style={{ width: '60%' }}
-                                        resizeMode="contain"
-                                        autoPlay
-                                        loop
-                                    />
-                                ) :
+                            <LabelContainer style={{ marginBottom: RFValue(31) }}>
+                                <LabelText
+                                    label='Movimentos:'
+                                />
+                                {isLoading ?
+                                    (
+                                        <Loader
+                                            animationName='skeleton'
+                                            width={RFValue(140)}
+                                        />
+                                    ) :
 
-                                (
-                                    <PokemonTypesContainer>
-                                        {
-                                            detailsData.moves.slice(0, 4).map(({ move }, index) => (
-                                                <PokemonInfoText
-                                                    key={index}
-                                                    style={{
-                                                        includeFontPadding: false,
-                                                    }}
-                                                    moves
-                                                >
-                                                    {(move.name)}
-                                                </PokemonInfoText>
-                                            ))
-                                        }
-                                        {detailsData.moves.length > 4 &&
-                                            (<PokemonInfoText moves>...</PokemonInfoText>)
-                                        }
+                                    (
+                                        <PokemonTypesContainer>
+                                            {
+                                                detailsData.moves.slice(0, 4).map(({ move }, index) => {
+                                                    return (
+                                                        <InfoText
+                                                            wrap
+                                                            key={index}
+                                                            rowDirection
+                                                            textFild='moves'
+                                                            text={move.name}
+                                                        />
+                                                    )
+                                                })
+                                            }
+                                            {detailsData.moves.length > 4 &&
+                                                (<InfoText
+                                                    wrap
+                                                    rowDirection
+                                                    textFild='moves'
+                                                    text="..."
+                                                />)
+                                            }
 
-                                    </PokemonTypesContainer>
-                                )
-
-
-                            }
-                            {
-
-                                !isLoading ?
-                                    detailsData.moves.length > 4 && (
-                                        <MovesButton
-                                            onPress={handleOpenMovesModal}
-                                        >
-                                            <TextMovesButton
-                                                style={{
-                                                    includeFontPadding: false,
-                                                }}
-                                            >
-                                                Ver todos os movimentos
-                                            </TextMovesButton>
-                                        </MovesButton>
+                                        </PokemonTypesContainer>
                                     )
-                                    :
-                                    (<LottieView
-                                        source={skeletonTextAnimation}
-                                        style={{ width: '60%', alignSelf: 'center' }}
-                                        resizeMode="contain"
-                                        autoPlay
-                                        loop
-                                    />)
-                            }
 
-                        </LabelContainer>
+                                }
+                                {
 
-                        {/* </ScrollView> */}
+                                    !isLoading ?
+                                        detailsData.moves.length > 4 && (
+                                            <MovesButton
+                                                onPress={handleOpenMovesModal}
+                                            >
+                                                <TextMovesButton
+                                                    style={{
+                                                        includeFontPadding: false,
+                                                    }}
+                                                >
+                                                    Ver todos os movimentos
+                                                </TextMovesButton>
+                                            </MovesButton>
+                                        )
+                                        :
+                                        (
+                                            <View style={{ alignItems: 'center' }}>
+                                                <Loader
+                                                    animationName='skeleton'
+                                                    width={RFValue(150)}
+                                                />
+                                            </View>
+                                        )
+                                }
 
-                    </Main>
-                )
-            }
+                            </LabelContainer>
+                        </Main>
+                    )
+                }
+                {
+                    !isLoading && (
+                        <MovesModal
+                            onOpen={handleOpenMovesModal}
+                            movesData={detailsData.moves}
+                            isLoading={isLoading}
+                            isVisible={isMovesVisible}
+                            onClose={handleCloseModal}
+                        />
+                    )
+                }
 
-            <MovesModal
-                onOpen={handleOpenMovesModal}
-                movesData={detailsData.moves}
-                isLoading={isLoading}
-                isVisible={isMovesVisible}
-                onClose={handleCloseModal}
-            />
 
-
-            {!isEvolutionsDataLoading && (
+                {/*
+                funcionalidade de evolução incompleta
+                {!isEvolutionsDataLoading && (
                 <EvolutionsModal
                     pokemonName={detailsData.name}
                     isLoading={isLoading}
@@ -665,7 +520,8 @@ export function PokemonDetails() {
                     isVisible={isEvolutionVisible}
                     onClose={handleCloseEvolutionsModal}
                 />)
-            }
+            } */}
+            </ScrollView>
         </Container >
     );
 }

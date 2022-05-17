@@ -19,9 +19,12 @@ export function PokemonList({ data }: IPokemonList) {
             data={data}
             keyExtractor={(item) => String(item.url)}
             renderItem={({ item }) => {
-                const { name } = item;
+                const { name, url } = item;
                 return (
-                    <Card name={name} />
+                    <Card
+                        name={name}
+                        url={url}
+                    />
                 )
             }}
             ItemSeparatorComponent={() => <Separator />}

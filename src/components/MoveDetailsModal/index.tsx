@@ -13,11 +13,12 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { IMoveInfo } from '../MovesModal';
 import { api } from '../../services/api';
 import { MoveDTO } from '../../dtos/MoveDTO';
-import { FildInfoText } from '../FildInfoText';
+import { FieldInfoText } from '../FieldInfoText';
 import { HeaderModal } from '../HeaderModal';
 import { ISetColorandIconByTypeReturn, setColorandIconByType } from '../../utils/setColorandIconByType';
 import { ScrollView, View } from 'react-native';
 import { Loader } from '../Loader';
+import { IconTyoe } from '../IconTyoe';
 
 interface IModal {
     isVisible: boolean;
@@ -81,7 +82,7 @@ export function MoveDetailsModal({
     const [effect, setEffect] = useState("");
 
     const [typeProps, setTypeProps] = useState<ISetColorandIconByTypeReturn>(setColorandIconByType("") as ISetColorandIconByTypeReturn);
-    const { icon: Icon, color } = typeProps;
+    const { icon, color } = typeProps;
 
     useEffect(() => {
         async function loadMoveInfo() {
@@ -100,7 +101,6 @@ export function MoveDetailsModal({
                     .effect);
 
                 setTypeProps(setColorandIconByType(data.type.name));
-                setisLoading(false);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -151,91 +151,83 @@ export function MoveDetailsModal({
                         >
                             <HeaderMain>
                                 {!isLoading ?
-                                    <View style={{
-                                        backgroundColor: color, borderRadius: 25,
-                                        alignItems: "center", justifyContent: "center",
-                                        width: RFValue(40), height: RFValue(40),
-                                        // marginTop: RFValue(6)
-                                    }}>
-                                        <Icon
-                                            width={RFValue(24)}
-                                            height={RFValue(24)}
-                                        />
-                                    </View> :
+                                    <IconTyoe
+                                        icon={icon}
+                                        backgroundColor={color}
+                                    /> :
                                     <Loader
                                         animationName='pokeball'
                                         width={RFValue(40)}
                                     />
 
                                 }
-                                <FildInfoText
+                                <FieldInfoText
                                     label="Tipo:"
                                     isTextWrap
                                     textField='type'
                                     typeColor={color}
                                     isLoading={isLoading}
                                     text={moveData.type.name}
-                                    widthInPercentageLoad={RFValue(75)}
+                                    widthLoad={RFValue(75)}
                                 />
 
-                                <FildInfoText
+                                <FieldInfoText
                                     label="Poder:"
                                     alignText={'center'}
                                     isTextWrap
                                     isLoading={isLoading}
-                                    widthInPercentageLoad={RFValue(60)}
+                                    widthLoad={RFValue(60)}
                                     textField={moveData.power === null ? "" : 'status'}
                                     text={moveData.power === null ? "-" : String(moveData.power)}
                                 />
 
-                                <FildInfoText
+                                <FieldInfoText
                                     label="PP:"
                                     alignText={'center'}
                                     isTextWrap
                                     textField='status'
                                     isLoading={isLoading}
                                     text={String(moveData.pp)}
-                                    widthInPercentageLoad={RFValue(60)}
+                                    widthLoad={RFValue(60)}
                                 />
 
-                                <FildInfoText
+                                <FieldInfoText
                                     label="Precisão:"
                                     alignText={'center'}
                                     isTextWrap
                                     textField={moveData.accuracy === null ? "" : 'status'}
                                     isLoading={isLoading}
                                     text={moveData.accuracy === null ? "-" : String(moveData.accuracy) + "%"}
-                                    widthInPercentageLoad={RFValue(75)}
+                                    widthLoad={RFValue(75)}
                                 />
                             </HeaderMain>
                             <FieldTextContainer style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <FildInfoText
+                                <FieldInfoText
                                     rowDirection
                                     textField={moveData.damage_class ? "status" : ""}
                                     isLoading={isLoading}
                                     label="Tipo de Movimento:"
-                                    widthInPercentageLoad={100}
+                                    widthLoad={100}
                                     text={moveData.damage_class ? moveData.damage_class.name : "-"}
                                 />
                             </FieldTextContainer>
                             <FieldTextContainer>
-                                <FildInfoText
+                                <FieldInfoText
                                     label="Descrição:"
-                                    isTextWrap
+
                                     isLoading={isLoading}
                                     text={describe.replace(/\n/g, " ").replace(/\n\n/g, "\n")}
-                                    widthInPercentageLoad={100}
+                                    widthLoad={100}
                                 />
                             </FieldTextContainer>
 
                             <FieldTextContainer >
-                                <FildInfoText
+                                <FieldInfoText
                                     label="Efeito(s):"
-                                    isTextWrap
                                     isLoading={isLoading}
                                     text={effect.replace(/\$effect_chance/g,
                                         String(moveData.effect_chance))}
-                                    widthInPercentageLoad={100}
+                                    widthLoad={100}
                                 />
                             </FieldTextContainer>
                         </Main>

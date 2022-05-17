@@ -35,7 +35,7 @@ export function MovesList({ moves, onDetailsOpen, handleSetMoveInfo }: IMoveList
                         <GestureHandlerRootView>
                             <Card
                                 name={move.name}
-                                moveURL={move.url}
+                                url={move.url}
                                 moveList
                                 onDetailsOpen={onDetailsOpen}
                                 handleSetMoveInfo={handleSetMoveInfo}

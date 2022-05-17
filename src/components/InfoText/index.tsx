@@ -10,11 +10,20 @@ interface IInfoText {
     wrap?: boolean;
     typeColor?: string;
     rowDirection?: boolean;
+    capitalize?: boolean;
     alignText?: "center" | "flex-start" | "flex-end";
-    textFild?: "ability" | "type" | "moves" | "status" | "";
+    textFild?: "ability" | "type" | "moves" | "status" | "" | "pokemonName";
 }
 
-export function InfoText({ wrap = false, text, textFild = "", typeColor, alignText = "flex-start", rowDirection }: IInfoText) {
+export function InfoText({
+    text,
+    wrap = false,
+    typeColor,
+    rowDirection,
+    capitalize,
+    textFild = "",
+    alignText = "flex-start",
+}: IInfoText) {
     return (
         <Container
             wrap={wrap}
@@ -27,6 +36,7 @@ export function InfoText({ wrap = false, text, textFild = "", typeColor, alignTe
             <Title
                 textFild={textFild}
                 style={{ includeFontPadding: false }}
+                capitalize={capitalize}
             >
                 {text}
             </Title>

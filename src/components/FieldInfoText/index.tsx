@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import { InfoText } from '../InfoText';
 import { LabelText } from '../LabelText';
 import { Loader } from '../Loader';
@@ -7,19 +8,23 @@ import {
     Container
 } from './styles';
 
+
 interface IFieldInfoText {
-    text: string;
+    text?: string;
     label: string;
+    widthLoad: number;
+    loadName?: string;
     typeColor?: string;
     isLoading: boolean;
     isTextWrap?: boolean;
+    capitalize?: boolean;
     rowDirection?: boolean;
-    widthInPercentageLoad: number;
+    loadAnimaton?: "rectSkeleton" | "skeleton";
     alignText?: "center" | "flex-start" | "flex-end";
-    textField?: "status" | "" | "type" | "ability" | "moves";
+    textField?: "status" | "" | "type" | "ability" | "moves" | "pokemonName";
 }
 
-export function FildInfoText({
+export function FieldInfoText({
     text,
     label,
     typeColor,
@@ -27,8 +32,10 @@ export function FildInfoText({
     textField,
     isLoading,
     isTextWrap,
+    widthLoad,
+    capitalize = false,
     rowDirection = false,
-    widthInPercentageLoad,
+    loadAnimaton = "skeleton",
 }: IFieldInfoText) {
     return (
         <Container rowDirection={rowDirection}>
@@ -37,20 +44,22 @@ export function FildInfoText({
             />
 
             {isLoading ?
-                (<Loader width={widthInPercentageLoad}
-                    animationName="skeleton"
+                (<Loader width={widthLoad}
+                    animationName={loadAnimaton}
                 />)
                 :
                 (
                     <InfoText
-                        text={text}
+                        text={text!}
                         wrap={isTextWrap}
                         typeColor={typeColor}
                         textFild={textField}
                         alignText={alignText}
+                        capitalize={capitalize}
                         rowDirection={rowDirection}
                     />
                 )
+
             }
         </Container>
     );

@@ -23,7 +23,7 @@ export function SearchInput() {
     const { loadPokemonList, generalListLoading, setPokemonList, setTotalPokemon, pokemonList } = generalSearchProps;
 
     const { individualSearchProps } = useIndividualSearch();
-    const { setIndividualSearchError, setIndividualSearchLoading } = individualSearchProps
+    const { individualSearchError, setIndividualSearchError, setIndividualSearchLoading } = individualSearchProps
 
 
 
@@ -115,7 +115,7 @@ export function SearchInput() {
 
 
             {
-                (resetSearch && !!pokemonName) && (
+                (resetSearch || individualSearchError) && (
                     <Button
                         onPress={handleResetSearch}
 

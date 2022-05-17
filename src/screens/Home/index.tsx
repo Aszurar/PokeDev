@@ -5,9 +5,6 @@ import { PokemonList } from '../../components/PokemonList';
 import { SearchInput } from '../../components/SearchInput';
 import {
     Container,
-    ErrorComponent,
-    ErrorSearchContainer,
-    ErrorText,
     LoadingListContainer,
     PokemonListContainer,
     SearchContainer,
@@ -20,6 +17,7 @@ import { useGeneralSearch } from '../../hooks/generalSearch';
 import { useIndividualSearch } from '../../hooks/individualSearch';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import { Loader } from '../../components/Loader';
+import { ErrorComponent } from '../../components/ErrorComponent';
 
 export interface IGeralSearch {
     count: number;
@@ -75,23 +73,12 @@ export function Home() {
 
 
                 {generalListError || individualSearchError ? (
-                    <ErrorComponent>
-                        <ErrorSearchContainer>
-                            <Search
-                                width={RFValue(100)}
-                                height={RFValue(100)}
-                                color={theme.colors.dark}
-                                strokeWidth={2}
-                            />
-                            <ErrorText>
-                                Ocorreu um erro ao buscar o Pokémon, verifique se o nome está correto e tente novamente.
-                            </ErrorText>
-                        </ErrorSearchContainer>
-                        <Loader
-                            animationName='diglet'
-                            width={RFValue(400)}
-                        />
-                    </ErrorComponent>
+
+                    <ErrorComponent
+                        title='Ocorreu um erro ao buscar o Pokémon, verifique se o nome está correto e tente novamente'
+                        icon={Search}
+                        home
+                    />
                 ) : (
                     <PokemonListContainer>
                         {(generalListLoading || individualSearchLoading) ? (

@@ -1,13 +1,15 @@
 import React from 'react';
 import LottieView from 'lottie-react-native';
-import skeletonTextAnimation from '../../assets/skeleton.json';
-import pokeballAnimation from '../../assets/pokeball.json';
 import digletAnimation from '../../assets/diglet.json';
+import pokeballAnimation from '../../assets/pokeball.json';
+import skeletonTextAnimation from '../../assets/skeleton.json';
+import skeletonAnimation from '../../assets/skeletonImage.json';
+
 
 
 interface ISkeletonTextLoad {
     width: number;
-    animationName: "pokeball" | "diglet" | "skeleton"
+    animationName: "pokeball" | "diglet" | "rectSkeleton" | "skeleton"
 }
 
 export function Loader({ width, animationName }: ISkeletonTextLoad) {
@@ -17,6 +19,8 @@ export function Loader({ width, animationName }: ISkeletonTextLoad) {
                 return pokeballAnimation;
             case 'diglet':
                 return digletAnimation;
+            case 'rectSkeleton':
+                return skeletonAnimation;
             default:
                 return skeletonTextAnimation;
         }

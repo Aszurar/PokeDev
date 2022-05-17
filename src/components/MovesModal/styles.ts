@@ -6,7 +6,7 @@ export const Container = styled.View``;
 export const ModalContainer = styled.View`
     width: 100%
     height: 65%;
-    background-color: ${({ theme }) => theme.colors.shape};
+    background-color: ${({ theme }) => theme.colors.danger};
 `;
 
 export const ListContainer = styled.View`
