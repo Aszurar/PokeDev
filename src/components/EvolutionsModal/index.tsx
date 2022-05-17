@@ -70,7 +70,6 @@ export function EvolutionsModal({
                         <Header
                             title={pokemonName}
                             subtitle="Evoluções"
-                            moveList
                             isLoading={isLoading}
                         />
 

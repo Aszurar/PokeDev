@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import LottieView from 'lottie-react-native';
-import pokeballAnimation from '../../assets/pokeball.json';
 import PokeballIcon from '../../assets/icons/pokeball.svg';
 import { Search, XCircle } from 'react-native-feather';
 import { useTheme } from 'styled-components/native';
@@ -14,24 +12,24 @@ import {
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useGeneralSearch } from '../../hooks/generalSearch';
 import { useIndividualSearch } from '../../hooks/individualSearch';
-import { Keyboard, TextInput } from 'react-native';
+import { Loader } from '../Loader';
 
+type IResponse = { name: string, url: string }[]
 
 export function SearchInput() {
     const theme = useTheme();
 
     const { generalSearchProps } = useGeneralSearch();
-    const { loadPokemonList, generalListLoading, setPokemonList, setTotalPokemon } = generalSearchProps;
+    const { loadPokemonList, generalListLoading, setPokemonList, setTotalPokemon, pokemonList } = generalSearchProps;
 
     const { individualSearchProps } = useIndividualSearch();
-    const { individualSearch, individualSearchError, setIndividualSearchError } = individualSearchProps
+    const { setIndividualSearchError, setIndividualSearchLoading } = individualSearchProps
+
 
 
     const [pokemonName, setPokemonName] = useState('');
     const [isInputInFocus, setIsInputInFocus] = useState(false);
     const [resetSearch, setIsResetSearch] = useState(false);
-
-    const inputRef = useRef<TextInput>(null);
 
     function handleInputInFocus() {
         setIsInputInFocus(true);
@@ -51,7 +49,6 @@ export function SearchInput() {
 
         try {
             await loadPokemonList();
-
         } catch (error) {
             console.error(error);
         }
@@ -59,53 +56,39 @@ export function SearchInput() {
 
     }
 
-    async function handleIndividualSearch() {
+    async function searchPokemonByName() {
+        setIndividualSearchLoading(true)
+        setIndividualSearchError(false);
         try {
-            const data = await individualSearch(pokemonName);
-            const results = {
-                count: data.name !== '' ? 1 : 0,
-                results: [{
-                    name: data.name,
-                    url: data.url
-                }]
-            }
+            const response: IResponse = pokemonList.results
+                .filter(pokemon => pokemon.name.includes(pokemonName.toLowerCase()));
 
-            setPokemonList(results);
-            setTotalPokemon(results.count);
-            handleActivateResetButton();
+            setTotalPokemon(response.length);
+
+            if (response.length > 0) {
+                setPokemonList({
+                    count: response.length,
+                    results: response
+                });
+            } else {
+                setIndividualSearchError(true);
+            }
         } catch (error) {
-            console.log('Erro: ', error)
+            console.log('Erro: ', error);
+            setIndividualSearchError(true);
         } finally {
+            setIndividualSearchLoading(false);
             handleActivateResetButton();
         }
     }
-
-    useEffect(() => {
-        const keyboardDidHideListener = Keyboard.addListener(
-            'keyboardDidHide',
-            () => {
-                handleInputInBlur();
-                inputRef.current?.blur();
-            },
-        );
-
-        return () => {
-            keyboardDidHideListener.remove();
-        };
-
-    }, [Keyboard])
-
 
     return (
         <Container>
             <IconContainer>
                 {(isInputInFocus || generalListLoading) ?
-                    (<LottieView
-                        source={pokeballAnimation}
-                        style={{ height: RFValue(24) }}
-                        resizeMode="contain"
-                        autoPlay
-                        loop
+                    (<Loader
+                        animationName='pokeball'
+                        width={RFValue(24)}
                     />) :
                     (<PokeballIcon
                         width={RFValue(24)}
@@ -113,25 +96,26 @@ export function SearchInput() {
                     />)
                 }
             </IconContainer>
-            <Input
-                ref={inputRef}
-                autoCorrect={false}
-                autoComplete="off"
-                returnKeyType="send"
-                onBlur={handleInputInBlur}
-                onFocus={handleInputInFocus}
-                placeholder="Buscar Pokémon"
-                onChangeText={setPokemonName}
-                onSubmitEditing={handleIndividualSearch}
-                value={pokemonName}
-                style={{
-                    includeFontPadding: false
-                }}
-            />
+            {!generalListLoading &&
+                (<Input
+                    autoCorrect={false}
+                    autoComplete="off"
+                    returnKeyType="send"
+                    onBlur={handleInputInBlur}
+                    onFocus={handleInputInFocus}
+                    placeholder="Buscar Pokémon"
+                    onChangeText={setPokemonName}
+                    onSubmitEditing={() => { pokemonName === "" ? handleResetSearch() : searchPokemonByName() }}
+                    value={pokemonName}
+                    style={{
+                        includeFontPadding: false
+                    }}
+                />)
+            }
 
 
             {
-                resetSearch && !!pokemonName && (
+                (resetSearch && !!pokemonName) && (
                     <Button
                         onPress={handleResetSearch}
 
@@ -142,8 +126,8 @@ export function SearchInput() {
                             }}
                         >
                             <XCircle
-                                width={24}
-                                height={24}
+                                width={RFValue(24)}
+                                height={RFValue(24)}
                                 strokeWidth={2}
                                 stroke={theme.colors.shape}
                             />
@@ -152,18 +136,21 @@ export function SearchInput() {
                 )
             }
 
-            <Button
-                onPress={handleIndividualSearch}
-            >
-                <IconContainer>
-                    <Search
-                        width={24}
-                        height={24}
-                        strokeWidth={2}
-                        stroke={theme.colors.danger}
-                    />
-                </IconContainer>
-            </Button>
-        </Container>
+            {
+                !generalListLoading && (
+                    <Button
+                        onPress={() => { pokemonName === "" ? handleResetSearch() : searchPokemonByName() }}
+                    >
+                        <IconContainer>
+                            <Search
+                                width={RFValue(24)}
+                                height={RFValue(24)}
+                                strokeWidth={2}
+                                stroke={theme.colors.danger}
+                            />
+                        </IconContainer>
+                    </Button>)
+            }
+        </Container >
     );
 }

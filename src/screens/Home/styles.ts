@@ -72,7 +72,7 @@ export const PokemonListContainer = styled.View`
 `;
 
 export const LoadingListContainer = styled.View`
-    height: 100%;
+    height: 82%;
     justify-content:center;
     align-items: center;
 `;

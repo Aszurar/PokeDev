@@ -17,7 +17,7 @@ import { FildInfoText } from '../FildInfoText';
 import { HeaderModal } from '../HeaderModal';
 import { ISetColorandIconByTypeReturn, setColorandIconByType } from '../../utils/setColorandIconByType';
 import { ScrollView, View } from 'react-native';
-import { PokeballLoad } from '../PokeballLoad';
+import { Loader } from '../Loader';
 
 interface IModal {
     isVisible: boolean;
@@ -162,7 +162,8 @@ export function MoveDetailsModal({
                                             height={RFValue(24)}
                                         />
                                     </View> :
-                                    <PokeballLoad
+                                    <Loader
+                                        animationName='pokeball'
                                         width={RFValue(40)}
                                     />
 

@@ -12,8 +12,7 @@ import { MovesList } from '../MovesList';
 import { MoveDetailsModal } from '../MoveDetailsModal';
 import { HeaderModal } from '../HeaderModal';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { PokeballLoad } from '../PokeballLoad';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Loader } from '../Loader';
 
 interface IModal {
     onOpen: () => void;
@@ -112,7 +111,8 @@ export function MovesModal({
                     ) :
                         (
                             <LoadContainer>
-                                <PokeballLoad
+                                <Loader
+                                    animationName='pokeball'
                                     width={RFValue(160)}
                                 />
                             </LoadContainer>

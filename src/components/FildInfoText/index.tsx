@@ -1,7 +1,7 @@
 import React from 'react';
 import { InfoText } from '../InfoText';
 import { LabelText } from '../LabelText';
-import { SkeletonTextLoad } from '../SkeletonTextLoad';
+import { Loader } from '../Loader';
 
 import {
     Container
@@ -37,7 +37,9 @@ export function FildInfoText({
             />
 
             {isLoading ?
-                (<SkeletonTextLoad width={widthInPercentageLoad} />)
+                (<Loader width={widthInPercentageLoad}
+                    animationName="skeleton"
+                />)
                 :
                 (
                     <InfoText

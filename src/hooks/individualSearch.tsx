@@ -13,10 +13,11 @@ interface IPokemonDetails extends PokemonDTO {
 
 interface IIndividualSearchContext {
     individualSearchProps: {
-        individualSearch: (name: string) => Promise<IPokemonDetails>;
-        individualSearchLoading: boolean;
         individualSearchError: boolean;
+        individualSearchLoading: boolean;
+        setIndividualSearchLoading: (value: boolean) => void;
         setIndividualSearchError: (value: boolean) => void;
+        individualSearch: (name: string) => Promise<IPokemonDetails>;
     };
 }
 
@@ -88,7 +89,8 @@ function IndividualSearchProvider({ children }: IIndividualSearchProvider) {
         individualSearch,
         individualSearchError,
         individualSearchLoading,
-        setIndividualSearchError
+        setIndividualSearchError,
+        setIndividualSearchLoading
     };
 
     return (
