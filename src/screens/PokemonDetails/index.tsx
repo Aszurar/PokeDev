@@ -40,6 +40,7 @@ import { InfoText } from '../../components/InfoText';
 import { setColorandIconByType } from '../../utils/setColorandIconByType';
 import { SvgProps } from 'react-native-svg';
 import { IconTyoe } from '../../components/IconTyoe';
+import { IPokemonDetails, useIndividualSearch } from '../../hooks/individualSearch';
 interface Params {
     name: string;
     url: string
@@ -95,10 +96,12 @@ export function PokemonDetails() {
     const route = useRoute();
 
     const { name: pokemonName, url: detailsRoute } = route.params as Params;
-    const [detailsData, setDetailsData] = useState<PokemonDTO>({} as PokemonDTO);
+    const [detailsData, setDetailsData] = useState<IPokemonDetails>({} as IPokemonDetails);
     const [speciesData, setSpeciesData] = useState<SpeciesDataDTO>({} as SpeciesDataDTO)
     const [describe, setDescribe] = useState<IDescribe>(defaultDescribeValue as IDescribe);
     // const [evolutionsData, setEvolutionsData] = useState(defaultEvolutionData as EvolutionDTO);
+    const { individualSearchProps } = useIndividualSearch();
+    const { individualSearch } = individualSearchProps
 
 
     const iconData: IIconType[] = []
@@ -172,12 +175,11 @@ export function PokemonDetails() {
             setIsLoading(true);
             try {
                 const detailsRouteWithID = detailsRoute.split('v2/')[1];
-                const response = await api.get(`${detailsRouteWithID}`);
-                const data = response.data;
+                const data = await individualSearch(detailsRouteWithID);
                 setDetailsData(data);
 
             } catch (err) {
-                console.log(err);
+                console.log("loadPokemonDetailsData Error:", err);
                 setisErrored(true);
             } finally {
                 setIsLoading(false);

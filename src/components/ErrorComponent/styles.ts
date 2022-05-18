@@ -9,7 +9,7 @@ interface IContainer {
 export const Container = styled.View<IContainer>`
     height: 100%;
     ${({ home }) => home && css`
-        height: 73%;
+        height: 78%;
     `};
     justify-content: flex-end;
     align-items: center;

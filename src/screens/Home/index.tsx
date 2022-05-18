@@ -12,7 +12,6 @@ import {
     TotalPokemonText
 } from './styles';
 import { Search } from 'react-native-feather';
-import { useTheme } from 'styled-components/native';
 import { useGeneralSearch } from '../../hooks/generalSearch';
 import { useIndividualSearch } from '../../hooks/individualSearch';
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native';

@@ -6,7 +6,7 @@ interface IIndividualSearchProvider {
     children: ReactNode;
 }
 
-interface IPokemonDetails extends PokemonDTO {
+export interface IPokemonDetails extends PokemonDTO {
     url: string;
 }
 
@@ -17,7 +17,7 @@ interface IIndividualSearchContext {
         individualSearchLoading: boolean;
         setIndividualSearchLoading: (value: boolean) => void;
         setIndividualSearchError: (value: boolean) => void;
-        individualSearch: (name: string) => Promise<IPokemonDetails>;
+        individualSearch: (pokemonRouteWithID: string) => Promise<IPokemonDetails>;
     };
 }
 
@@ -61,11 +61,12 @@ function IndividualSearchProvider({ children }: IIndividualSearchProvider) {
     const [individualSearchError, setIndividualSearchError] = useState(false);
     // const [individualSearch, setIndividualSearch] = React.useState<PokemonDTO>(defaultPokemonDetails);
 
-    async function individualSearch(name: string): Promise<IPokemonDetails> {
+    async function individualSearch(pokemonRouteWithID: string): Promise<IPokemonDetails> {
+        setIndividualSearchError(false);
         setIndividualSearchLoading(true);
         let results: IPokemonDetails = { ...defaultPokemonDetails };
         try {
-            const response = await api.get(`/pokemon/${name.toLowerCase()}`);
+            const response = await api.get(`${pokemonRouteWithID}`);
             const data = response.data as PokemonDTO;
 
 
@@ -74,7 +75,6 @@ function IndividualSearchProvider({ children }: IIndividualSearchProvider) {
                 url: response.config.url!
             }
 
-            setIndividualSearchError(false);
         } catch (err) {
             setIndividualSearchError(true);
             console.log('erro:', err)

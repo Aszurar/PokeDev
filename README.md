@@ -13,8 +13,9 @@
 </h3>
 
 ___
+
 <div align="center" >
-  <img src="https://i.imgur.com/Pb0pRVA.gif" width="250">____<img src="" width=250>
+    <img src="https://i.imgur.com/Pb0pRVA.gif" width="250">____<img src="https://i.imgur.com/tbFfP5Z.gif" width=250>
 </div>
 
 
@@ -186,8 +187,8 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias
 - [React Native Feather](https://www.npmjs.com/package/react-native-feather)
   - [Feather Icons](https://feathericons.com/)
 - [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/)
-- [react-native-Iphone-X-Helper](https://github.com/ptelad/react-native-iphone-x-helper#readme)
   - [RectButton & Bordeless Button](https://docs.swmansion.com/react-native-gesture-handler/docs/next/api/components/buttons/#rectbutton)
+- [React Native Iphone X Helper](https://github.com/ptelad/react-native-iphone-x-helper#readme)
 - [React Native Modal](https://github.com/react-native-modal/react-native-modal)
 - [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/docs/)
 - [React Native Responsive Fontsize](https://www.npmjs.com/package/react-native-responsive-fontsize)

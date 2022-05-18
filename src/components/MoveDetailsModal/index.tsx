@@ -102,7 +102,7 @@ export function MoveDetailsModal({
 
                 setTypeProps(setColorandIconByType(data.type.name));
             } catch (err) {
-                console.log(err);
+                console.log('loadMoveInfo', err);
             } finally {
                 setisLoading(false);
 
