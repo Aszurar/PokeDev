@@ -43,7 +43,7 @@ ___
 Com esse projeto foi posto em prática quase todos os conceitos aprendidos com minha experiência profissional e educational princpalmente com a Rocketseat.
 
 1. **Home**
-<img src="https://i.imgur.com/iKjihcj.png" width="1000">
+<img src="https://i.imgur.com/CPbyHen.png" width="1000">
 - Funcionalidades:
     - Listagem de todos Pokémons e suas variações.
       - Perfomática, por meio da Flatlist.
@@ -80,8 +80,19 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
   <img src="" width=250>
 </div>
 
-
 1. **Página sobre o Pokémon**
+<img src="https://i.imgur.com/NagFURR.png" width="1000">
+    - Funcionalidades:
+    - Informações sobre o Pokémon.
+      - Nome, número, habitat, tipo, habilidades, etc.
+      - Todas as informações são mostradas em um componente que se atualiza a cada pesquisa ou listagem.
+    - Componente de loading personalizado e animado em todos componentes.
+    - Nessa tela foi necessário realizar 2 requisições para obtermos todas informações exibitdas:
+      - Uma para obter o nome do Pokémon e outra para obter as informações do Pokémon.
+      - Outra para obter o habitat, raridade e descrição.
+    - Para isso houve determinada dificuldade pois uma requisição dependia da outra, ou seja, eram processos assíncronos dependentes fazendo com que houvesse difiluldade em garantir que uma requisção seja feita somente após a outra, ou cudiado no uso de uma variável Estado
+
+   -
     -
 * **Logout**:
 
@@ -93,8 +104,12 @@ ___
 
 ## :art: Design
 
-[<h2 align="center">Rentx - Figma</h2>]()
+[<h2 align="center">Pokedev</h2>]()
+<div align="center">
 <img src="https://i.imgur.com/CPbyHen.png" width="1000">
+<img src="https://i.imgur.com/dDLRsnX.png" width="100">
+</div>
+<img src="https://i.imgur.com/NagFURR.png" width="1000">
 
 1. Código:
      - É tentando **manter o padrão que é ensinado na Rocketseat** para o código mais limpo, organizado de facil entendimento com sua estrutura de pastas também.
