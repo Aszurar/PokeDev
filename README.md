@@ -35,7 +35,7 @@ ___
 * **Home**:
 
 <div align="center" >
-  <img src="https://i.imgur.com/YAZhIOl.gif" width="250">____<img src="https://i.imgur.com/Xr7jUeY.gif" width=250>____<img src="https://i.imgur.com/zFLMtDA.gif" width="250">
+  <img src="https://i.imgur.com/YAZhIOl.gif" width="250">____<img src="https://i.imgur.com/Xr7jUeY.gif" width=250>____<img src="https://i.imgur.com/z1NJ8Hs.gif" width="250">
 </div>
 
 ___
@@ -77,14 +77,13 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 
 
 * **Página de detalhes sobre o Pokémon**:
-
 <div align="center" >
-  <img src="https://i.imgur.com/1ocPfUP.gif" width="250">__________________
-  <img src="" width=250>
+  <img src="https://i.imgur.com/1ocPfUP.gif" width="250">____<img src="https://i.imgur.com/9vitjHE.gif" width=250>____<img src="https://i.imgur.com/6iHu4us.gif" width="250">
 </div>
 
 2. **Página sobre o Pokémon**
-<img src="https://i.imgur.com/NagFURR.png" width="1000">
+<img src="https://i.imgur.com/5OJQkwU.png" width="1000">
+
     - Funcionalidades:
 
           - Informações sobre o Pokémon.
