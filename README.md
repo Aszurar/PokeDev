@@ -144,16 +144,27 @@ ___
 
 O projeto foi desenvolvido utilizando as seguintes tecnologias
 - [Android Studio](https://developer.android.com/studio)
+- [Axios](https://www.npmjs.com/package/axios)
 - [Javascript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+- [Lottie Animations React Native](https://www.npmjs.com/package/lottie-react-native)
 - [NodeJS](https://nodejs.org/en/)
 - [React](https://pt-br.reactjs.org/)
-- [React-Native](https://reactnative.dev/)
+- [React Native](https://reactnative.dev/)
 - [React Navigation](https://reactnavigation.org/)
+   - [Stack Navigator](https://reactnavigation.org/docs/stack-navigator/)
+- [React Native Feather](https://www.npmjs.com/package/react-native-feather)
+  - [Feather Icons](https://feathericons.com/)
+- [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/)
+- [react-native-Iphone-X-Helper](https://github.com/ptelad/react-native-iphone-x-helper#readme)
+  - [RectButton & Bordeless Button](https://docs.swmansion.com/react-native-gesture-handler/docs/next/api/components/buttons/#rectbutton)
+- [React Native Modal](https://github.com/react-native-modal/react-native-modal)
+- [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/docs/)
+- [React Native Responsive Fontsize](https://www.npmjs.com/package/react-native-responsive-fontsize)
+- [React Native SVG](https://github.com/react-native-svg/react-native-svg)
 - [Styled Components](https://www.styled-components.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Yarn](https://classic.yarnpkg.com/blog/2017/05/12/introducing-yarn/)
 ___
-
 ## :package: Como baixar e executar o projeto
 
   - Clonar o projeto:
