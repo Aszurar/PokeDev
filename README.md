@@ -42,8 +42,8 @@ ___
 
 Com esse projeto foi posto em prática quase todos os conceitos aprendidos com minha experiência profissional e educational princpalmente com a Rocketseat.
 
-<img src="https://i.imgur.com/iKjihcj.png" width="1000">
 1. **Home**
+<img src="https://i.imgur.com/iKjihcj.png" width="1000">
     - Listagem de todos Pokémons e suas variações.
       - Perfomática, por meio da Flatlist.
     - Pesquisa de qualquer Pokémons e suas variações.
@@ -87,7 +87,7 @@ ___
 ## :art: Design
 
 [<h2 align="center">Rentx - Figma</h2>]()
-<img src="https://i.imgur.com/iKjihcj.png" width="1000">
+<img src="https://i.imgur.com/CPbyHen.png" width="1000">
 
 1. Código:
      - É tentando **manter o padrão que é ensinado na Rocketseat** para o código mais limpo, organizado de facil entendimento com sua estrutura de pastas também.
