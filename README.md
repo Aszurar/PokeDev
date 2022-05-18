@@ -107,9 +107,9 @@ ___
 [<h2 align="center">Pokedev</h2>]()
 <div align="center">
 <img src="https://i.imgur.com/CPbyHen.png" width="1000">
+<img src="https://i.imgur.com/NagFURR.png" width="1000">
 <img src="https://i.imgur.com/dDLRsnX.png" width="100">
 </div>
-<img src="https://i.imgur.com/NagFURR.png" width="1000">
 
 1. Código:
      - É tentando **manter o padrão que é ensinado na Rocketseat** para o código mais limpo, organizado de facil entendimento com sua estrutura de pastas também.
