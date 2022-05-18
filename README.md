@@ -45,27 +45,28 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 1. **Home**
 <img src="https://i.imgur.com/iKjihcj.png" width="1000">
 - Funcionalidades:
-    - Listagem de todos Pokémons e suas variações.
-      - Perfomática, por meio da Flatlist.
-    - Pesquisa de qualquer Pokémons e suas variações.
-      - É feita pelo nome(_não existe pokémon com o mesmo nome_).
-      - Todos Pokémon que contém o nome digitado serão mostrados como resultados garantindo assim mesmo que o usuário não lembre totalmente do nome do Pokémon, consiga encontrá-lo.
-        - Exemplo: Pesquisar com a palavra **Regi**, o resultado será **Regigigas, Regice, Regirock, Regidragon, Registeel e Regieleki.**
-    - Reset de pesquisa.
-      - É feito por meio de um botão que é ativado no Input após a pesquisa ou caso ocorra algum erro.
-      - Garante melhor usabilidade e praticidade.
-    - Número total de Pokémon seja do resultado da pesquisa ou da listagem geral.
-      - É mostrado na tela em um componente que se atualiza a cada pesquisa ou listagem.
-    - Componente de Loading personalizado para cada componente.
-      - Uso da Lottie Animations.
-      - Loading interativo no Input
-    - Componente de Erro personalizado e animado caso a listagem ou a pesquisa não tenham resultados.
-      - Uso da Lottie Animations.
-      - Erro interativo no Input.
-    - Focus e Submit inteligente no Input de pesquisa.
-      - Ao digitar o nome do Pokémon, podemos tanto pesquisar apertando o botão de pesquisa quanto apertar o botão de submit padrão do teclado do dispositivo móvel.
-      - Ao apertar em qualquer outra região da tela será retirado o foco do Input.
-        - Foi necessário o uso do TouchableWithoutFeedback para que o Input não fique ativado quando o usuário clicar em qualquer outra região da tela em conjunto com o onStartShouldSetResponder para evitar problemas de icompatibilidade com a Flatlist e RectButton.
+
+      - Listagem de todos Pokémons e suas variações.
+        - Perfomática, por meio da Flatlist.
+      - Pesquisa de qualquer Pokémons e suas variações.
+        - É feita pelo nome(_não existe pokémon com o mesmo nome_).
+        - Todos Pokémon que contém o nome digitado serão mostrados como resultados garantindo assim mesmo que o usuário não lembre totalmente do nome do Pokémon, consiga encontrá-lo.
+          - Exemplo: Pesquisar com a palavra **Regi**, o resultado será **Regigigas, Regice, Regirock, Regidragon, Registeel e Regieleki.**
+      - Reset de pesquisa.
+        - É feito por meio de um botão que é ativado no Input após a pesquisa ou caso ocorra algum erro.
+        - Garante melhor usabilidade e praticidade.
+      - Número total de Pokémon seja do resultado da pesquisa ou da listagem geral.
+        - É mostrado na tela em um componente que se atualiza a cada pesquisa ou listagem.
+      - Componente de Loading personalizado para cada componente.
+        - Uso da Lottie Animations.
+        - Loading interativo no Input
+      - Componente de Erro personalizado e animado caso a listagem ou a pesquisa não tenham resultados.
+        - Uso da Lottie Animations.
+        - Erro interativo no Input.
+      - Focus e Submit inteligente no Input de pesquisa.
+        - Ao digitar o nome do Pokémon, podemos tanto pesquisar apertando o botão de pesquisa quanto apertar o botão de submit padrão do teclado do dispositivo móvel.
+        - Ao apertar em qualquer outra região da tela será retirado o foco do Input.
+          - Foi necessário o uso do TouchableWithoutFeedback para que o Input não fique ativado quando o usuário clicar em qualquer outra região da tela em conjunto com o onStartShouldSetResponder para evitar problemas de icompatibilidade com a Flatlist e RectButton.
         -
 * **Página Inicial**:
 
