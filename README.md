@@ -44,7 +44,7 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 
 1. **Home**
 <img src="https://i.imgur.com/iKjihcj.png" width="1000">
-
+- Funcionalidades:
     - Listagem de todos Pokémons e suas variações.
       - Perfomática, por meio da Flatlist.
     - Pesquisa de qualquer Pokémons e suas variações.
