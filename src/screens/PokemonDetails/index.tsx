@@ -194,7 +194,6 @@ export function PokemonDetails() {
             setTypeProps(iconData);
             loadPokemonSpecieDetails();
             // loadEvolutionsData();
-
         }
     }, [isLoading])
 

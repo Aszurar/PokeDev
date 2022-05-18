@@ -21,10 +21,10 @@ export function SearchInput() {
 
     const { generalSearchProps } = useGeneralSearch();
     const {
-        loadPokemonList,
         generalListLoading,
         setTotalPokemon,
         pokemonList,
+        setGeneralListLoading,
         setListShowedInComponents
 
     } = generalSearchProps;
@@ -53,17 +53,18 @@ export function SearchInput() {
         setIsResetSearch(true);
     };
 
-    async function handleResetSearch() {
+    function handleResetSearch() {
         setPokemonName('');
         setIsResetSearch(false);
         setIndividualSearchError(false);
+        setGeneralListLoading(false);
 
         try {
-            await loadPokemonList();
+            setListShowedInComponents(pokemonList)
         } catch (error) {
             console.error(error);
+            setGeneralListLoading(false);
         }
-
 
     }
 

@@ -53,8 +53,9 @@ function GeneralSearchProvider({ children }: IGeneralSearchProvider) {
 
 
     async function loadPokemonList() {
+        setGeneralListError(false);
+        setGeneralListLoading(true);
         try {
-            setGeneralListLoading(true);
 
             const response = await api.get('/pokemon?limit=100000&offset=0');
             const { count, results } = response.data as IGeneralSearch;
@@ -62,7 +63,6 @@ function GeneralSearchProvider({ children }: IGeneralSearchProvider) {
             setPokemonList({ count, results });
             setListShowedInComponents({ count, results });
             setTotalPokemon(count);
-            setGeneralListError(false);
         } catch (err) {
             setGeneralListError(true);
             console.log(err);
