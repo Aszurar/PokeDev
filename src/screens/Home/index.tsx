@@ -31,13 +31,12 @@ export function Home() {
     const { generalSearchProps } = useGeneralSearch();
 
     const {
-        pokemonList,
+        listShowedInComponents,
         totalPokemon,
         generalListError,
         generalListLoading,
     } = generalSearchProps;
 
-    const theme = useTheme();
 
     const { individualSearchProps } = useIndividualSearch();
     const { individualSearchLoading, individualSearchError } = individualSearchProps
@@ -91,7 +90,7 @@ export function Home() {
                         ) :
                             <View onStartShouldSetResponder={() => true}>
                                 <PokemonList
-                                    data={pokemonList.results}
+                                    data={listShowedInComponents.results}
                                 />
                             </View>
                         }

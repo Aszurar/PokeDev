@@ -21,6 +21,8 @@ interface IGeneralSearchProps {
     setPokemonList: (object: IGeneralSearch) => void;
     setTotalPokemon: (value: number) => void;
     loadPokemonList: () => Promise<void>;
+    listShowedInComponents: IGeneralSearch;
+    setListShowedInComponents: (object: IGeneralSearch) => void;
     generalListLoading: boolean;
     setGeneralListLoading: (value: boolean) => void;
     generalListError: boolean;
@@ -44,6 +46,7 @@ const GeneralSearchContext = createContext({} as IGeneralSearchContext);
 
 function GeneralSearchProvider({ children }: IGeneralSearchProvider) {
     const [pokemonList, setPokemonList] = useState<IGeneralSearch>(defaultPokemonList as IGeneralSearch);
+    const [listShowedInComponents, setListShowedInComponents] = useState<IGeneralSearch>(defaultPokemonList as IGeneralSearch);
     const [generalListLoading, setGeneralListLoading] = useState(true);
     const [generalListError, setGeneralListError] = useState(false);
     const [totalPokemon, setTotalPokemon] = useState(0);
@@ -57,6 +60,7 @@ function GeneralSearchProvider({ children }: IGeneralSearchProvider) {
             const { count, results } = response.data as IGeneralSearch;
 
             setPokemonList({ count, results });
+            setListShowedInComponents({ count, results });
             setTotalPokemon(count);
             setGeneralListError(false);
         } catch (err) {
@@ -81,6 +85,8 @@ function GeneralSearchProvider({ children }: IGeneralSearchProvider) {
         generalListLoading,
         setGeneralListError,
         setGeneralListLoading,
+        listShowedInComponents,
+        setListShowedInComponents
     }
 
     return (

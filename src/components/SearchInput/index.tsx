@@ -20,10 +20,21 @@ export function SearchInput() {
     const theme = useTheme();
 
     const { generalSearchProps } = useGeneralSearch();
-    const { loadPokemonList, generalListLoading, setPokemonList, setTotalPokemon, pokemonList } = generalSearchProps;
+    const {
+        loadPokemonList,
+        generalListLoading,
+        setTotalPokemon,
+        pokemonList,
+        setListShowedInComponents
+
+    } = generalSearchProps;
 
     const { individualSearchProps } = useIndividualSearch();
-    const { individualSearchError, setIndividualSearchError, setIndividualSearchLoading } = individualSearchProps
+    const {
+        individualSearchError,
+        setIndividualSearchError,
+        setIndividualSearchLoading
+    } = individualSearchProps
 
 
 
@@ -66,7 +77,7 @@ export function SearchInput() {
             setTotalPokemon(response.length);
 
             if (response.length > 0) {
-                setPokemonList({
+                setListShowedInComponents({
                     count: response.length,
                     results: response
                 });
