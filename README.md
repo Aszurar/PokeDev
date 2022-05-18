@@ -13,9 +13,10 @@
 </h3>
 
 ___
-
-<div align="center" ><img src="" width="220">
+<div align="center" >
+  <img src="https://i.imgur.com/Pb0pRVA.gif" width="250">____<img src="" width=250>
 </div>
+
 
 - [**Link do vídeo completo sobre o projeto**]()
 ___
@@ -28,12 +29,12 @@ ___
 - Para criação das interfaces foi usado React Native em conjunto com TypeScript e diversas bibliotecas disponíveis para React Native como:
   - React Navigation: https://reactnavigation.org/
   - Styled Components: https://www.styled-components.com/
-- dentre outras, abaixo, na sessão de   <a href="#rocket-tecnologias-utilizadas">Tecnologias</a>&nbsp;|&nbsp; estará mais detalhado.
+- dentre outras, abaixo, na sessão de   <a href="#rocket-principais-tecnologias-utilizadas">Tecnologias</a> estará mais detalhado.
 
 * **Home**:
 
 <div align="center" >
-  <img src="https://i.imgur.com/YAZhIOl.gif" width="250">____<img src="" width=250>____<img src="https://i.imgur.com/zFLMtDA.gif" width="250">
+  <img src="https://i.imgur.com/YAZhIOl.gif" width="250">____<img src="https://i.imgur.com/Xr7jUeY.gif" width=250>____<img src="https://i.imgur.com/zFLMtDA.gif" width="250">
 </div>
 
 ___
