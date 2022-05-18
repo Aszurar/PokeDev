@@ -83,7 +83,7 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 1. **Página sobre o Pokémon**
 <img src="https://i.imgur.com/NagFURR.png" width="1000">
     - Funcionalidades:
-    -
+
           - Informações sobre o Pokémon.
             - Nome, número, habitat, tipo, habilidades, etc.
             - Todas as informações são mostradas em um componente que se atualiza a cada pesquisa ou listagem.
