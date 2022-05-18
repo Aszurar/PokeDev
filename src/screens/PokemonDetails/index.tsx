@@ -149,7 +149,7 @@ export function PokemonDetails() {
 
 
     async function loadPokemonSpecieDetails() {
-        setisErrored(true);
+        setisErrored(false);
         setIsSpeciesDetailsLoading(true);
         try {
             const specieRouteWithID = detailsData.species.url.split('v2/')[1];
