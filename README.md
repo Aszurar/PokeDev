@@ -30,10 +30,10 @@ ___
   - Styled Components: https://www.styled-components.com/
 - dentre outras, abaixo, na sessão de   <a href="#rocket-tecnologias-utilizadas">Tecnologias</a>&nbsp;|&nbsp; estará mais detalhado.
 
-* **Home: Listagem e Pesquisa**:
+* **Home**:
 
 <div align="center" >
-  <img src="" width="250">____<img src="" width=220>____<img src="h" width="250">
+  <img src="https://i.imgur.com/YAZhIOl.gif" width="250">____<img src="" width=250>____<img src="https://i.imgur.com/zFLMtDA.gif" width="250">
 </div>
 
 ___
@@ -73,14 +73,15 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
       - Ao apertar em qualquer outra região da tela será retirado o foco do Input.
         - Foi necessário o uso do TouchableWithoutFeedback para que o Input não fique ativado quando o usuário clicar em qualquer outra região da tela em conjunto com o onStartShouldSetResponder para evitar problemas de icompatibilidade com a Flatlist e RectButton.
 
-* **Página Inicial**:
+
+* **Página de detalhes sobre o Pokémon**:
 
 <div align="center" >
-  <img src="" width="220">__________________
+  <img src="https://i.imgur.com/1ocPfUP.gif" width="250">__________________
   <img src="" width=250>
 </div>
 
-1. **Página sobre o Pokémon**
+2. **Página sobre o Pokémon**
 <img src="https://i.imgur.com/NagFURR.png" width="1000">
     - Funcionalidades:
 
@@ -128,9 +129,8 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
             iv. Splash Screen
                 - Tela de loading inicial da aplicação.
 
-<div align="center" >
-  <img src="" width=220>
-</div>
+
+
 
 ___
 

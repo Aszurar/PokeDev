@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PokeballIcon from '../../assets/icons/pokeball.svg';
 import { Search, XCircle } from 'react-native-feather';
 import { useTheme } from 'styled-components/native';
@@ -61,6 +61,8 @@ export function SearchInput() {
 
         try {
             setListShowedInComponents(pokemonList)
+            setTotalPokemon(pokemonList.results.length);
+
         } catch (error) {
             console.error(error);
             setGeneralListLoading(false);
