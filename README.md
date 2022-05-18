@@ -96,8 +96,6 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 
           - Para isso houve determinada dificuldade pois uma requisição dependia da outra, ou seja, eram processos assíncronos dependentes fazendo com que houvesse difiluldade em garantir que uma requisção seja feita somente após a outra, ou cudiado no uso de uma variável Estado
 
-   -
-    -
 * **Logout**:
 
 <div align="center" >
