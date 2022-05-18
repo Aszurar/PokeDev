@@ -91,12 +91,42 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
           - Componente de loading personalizado e animado em todos componentes.
 
           - Nessa tela foi necessário realizar 2 requisições para obtermos todas informações exibitdas:
-            - Uma para obter o nome do Pokémon e outra para obter as informações do Pokémon.
+            - Uma para obter o nome do Pokémon, tipo, número na national pokedex, peso, altura, habilidades e movimentos.
+
             - Outra para obter o habitat, raridade e descrição.
 
           - Para isso houve determinada dificuldade pois uma requisição dependia da outra, ou seja, eram processos assíncronos dependentes fazendo com que houvesse difiluldade em garantir que uma requisção seja feita somente após a outra, ou cudiado no uso de uma variável Estado
 
-* **Logout**:
+        - **Modais**
+
+            - Há 2 modais que podem ser acessíveis nessa tela:
+              - **Modal de listando de todos movimentos**
+                - É acessado ao tocar no botão de todos movimentos.
+                - O botão de todos movimentos não é mostrado caso o pokémon não tenha mais de 4 movimentos, ou seja, o modal não é acessível caso todos movimentos do pokémon já estejam sendo mostrado na página de detalhes de pokémon(ate 4).
+                - O Modal é deslizável(swipeable) na vertical, pode ser fechado deslizando para baixo ou aperdando nos botões com os ícones indicando para baixo.
+
+              - **Modal sobre cada movimento**
+                - É acessado por meio do modal acima, no caso, ao apertar em algum movimento da listagem acima o modal sobre o movimento é aberto.
+                - Assim como o de cima, também é deslizável(swipeable), mas nesse caso na horizontal
+                - Nele é feito a requisição para obter as informações exibidas sobre o movimento selecionado.
+                - Essa requisição depende da url do movimento selecionado, ou seja, assim como mencionado anteriormente tamém é uma requisição que depende de outra.
+                  - Nesse caso depende da requisição sobre os detalhes do pokémon feita na página de detalhes do pokémon, um dos parâmetros retornados no objeto da resposta é  um vetor de objeto, cada um contendo o nome de todos movimentos daquele pokémon e a url de cada um.
+
+        - Funcionalidades em desenvolvimento:
+
+            i. Modal de evolução dos pokémons
+                - Não foi possível terminar ainda a parte da impressão no modal e estilização das evoluções de cada pokémon mas a requisição já foi contruída no código assim como o botao de evolução
+                  - O modal foi desativado para voltar quando a funcionalidade tiver pronta)
+
+            ii. Página de "Meus Pokémon" e salvar pokémon
+                - Funcionalidade que permite o usuário salvar/favoritar determinado pokémon e ele ser salvo localmente no dispositivo físico com Assync Storage.
+                - Ainda não foi possível realizar essa funcionalidade mais já foi planejada.
+
+            iii. Página sobre o Movimento
+                - Uma página com mais inforações sobre o movimento selecionado no modal sobre os movimentos.
+                - Teríamos um botão nele que acessaria essa página para detalhar mais informações e uma listagem com todos pokémons que possui aquele movimento.
+            iv. Splash Screen
+                - Tela de loading inicial da aplicação.
 
 <div align="center" >
   <img src="" width=220>
