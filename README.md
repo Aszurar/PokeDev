@@ -15,7 +15,7 @@
 ___
 
 <div align="center" >
-    <img src="https://i.imgur.com/Pb0pRVA.gif" width="250">____<img src="https://i.imgur.com/9vitjHE.gif" width=250>
+    <img src="https://i.imgur.com/Pb0pRVA.gif" width="250">____<img src="https://i.imgur.com/riiOoLb.gif" width=250>
 </div>
 
 
@@ -78,7 +78,7 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 
 * **Página de detalhes sobre o Pokémon**:
 <div align="center" >
-  <img src="https://i.imgur.com/1ocPfUP.gif" width="250">____<img src="https://i.imgur.com/9vitjHE.gif" width=250>____<img src="https://i.imgur.com/6iHu4us.gif" width="250">
+  <img src="https://i.imgur.com/1ocPfUP.gif" width="250">____<img src="https://i.imgur.com/riiOoLb.gif" width=250>____<img src="https://i.imgur.com/6iHu4us.gif" width="250">
 </div>
 
 2. **Página sobre o Pokémon**
