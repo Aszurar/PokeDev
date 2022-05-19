@@ -71,7 +71,7 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
     - Uso da Lottie Animations.
     - Erro interativo no Input.
 
-- Focus e Submit inteligente no Input de pesquisa.
+  - Focus e Submit inteligente no Input de pesquisa.
     - Ao digitar o nome do Pokémon, podemos tanto pesquisar apertando o botão de pesquisa quanto apertar o botão de submit padrão do teclado do dispositivo móvel.
     - Ao apertar em qualquer outra região da tela será retirado o foco do Input.
     - Foi necessário o uso do TouchableWithoutFeedback para que o Input não fique ativado quando o usuário clicar em qualquer outra região da tela em conjunto com o onStartShouldSetResponder para evitar problemas de icompatibilidade com a Flatlist e RectButton.
@@ -85,32 +85,31 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 2. **Página sobre o Pokémon**
 <img src="https://i.imgur.com/5OJQkwU.png" width="1000">
 
-    - Funcionalidades:
+ - Funcionalidades:
 
-        - Informações sobre o Pokémon.
-        - Nome, número, habitat, tipo, habilidades, etc.
-        - Todas as informações são mostradas em um componente que se atualiza a cada pesquisa ou listagem.
-        - Componente de loading personalizado e animado em todos componentes.
-        - Nessa tela foi necessário realizar 2 requisições para obtermos todas informações exibitdas:
-          - Uma para obter o nome do Pokémon, tipo, número na national pokedex, peso, altura, habilidades e movimentos.
-          - Outra para obter o habitat, raridade e descrição.
-
-          - Para isso houve determinada dificuldade pois uma requisição dependia da outra, ou seja, eram processos assíncronos dependentes fazendo com que houvesse difiluldade em garantir que uma requisção seja feita somente após a outra, ou cudiado no uso de uma variável Estado
+   - Informações sobre o Pokémon.
+   - Nome, número, habitat, tipo, habilidades, etc.
+   - Todas as informações são mostradas em um componente que se atualiza a cada pesquisa ou listagem.
+   - Componente de loading personalizado e animado em todos componentes.
+   - Nessa tela foi necessário realizar 2 requisições para obtermos todas informações exibitdas:
+     - Uma para obter o nome do Pokémon, tipo, número na national pokedex, peso, altura, habilidades e movimentos.
+     - Outra para obter o habitat, raridade e descrição.
+     - Para isso houve determinada dificuldade pois uma requisição dependia da outra, ou seja, eram processos assíncronos dependentes fazendo com que houvesse difiluldade em garantir que uma requisção seja feita somente após a outra, ou cudiado no uso de uma variável Estado
 
     - **Modais**
 
-        - Há 2 modais que podem ser acessíveis nessa tela:
-            - **Modal de listando de todos movimentos**
-              - É acessado ao tocar no botão de todos movimentos.
-              - O botão de todos movimentos não é mostrado caso o pokémon não tenha mais de 4 movimentos, ou seja, o modal não é acessível caso todos movimentos do pokémon já estejam sendo mostrado na página de detalhes de pokémon(ate 4).
-              - O Modal é deslizável(swipeable) na vertical, pode ser fechado deslizando para baixo ou aperdando nos botões com os ícones indicando para baixo.
+    - Há 2 modais que podem ser acessíveis nessa tela:
+      - **Modal de listando de todos movimentos**
+        - É acessado ao tocar no botão de todos movimentos.
+        - O botão de todos movimentos não é mostrado caso o pokémon não tenha mais de 4 movimentos, ou seja, o modal não é acessível caso todos movimentos do pokémon já estejam sendo mostrado na página de detalhes de pokémon(ate 4).
+        - O Modal é deslizável(swipeable) na vertical, pode ser fechado deslizando para baixo ou aperdando nos botões com os ícones indicando para baixo.
 
-            - **Modal sobre cada movimento**
-              - É acessado por meio do modal acima, no caso, ao apertar em algum movimento da listagem acima o modal sobre o movimento é aberto.
-              - Assim como o de cima, também é deslizável(swipeable), mas nesse caso na horizontal
-              - Nele é feito a requisição para obter as informações exibidas sobre o movimento selecionado.
-                - Essa requisição depende da url do movimento selecionado, ou seja, assim como mencionado anteriormente tamém é uma requisição que depende de outra.
-                - Nesse caso depende da requisição sobre os detalhes do pokémon feita na página de detalhes do pokémon, um dos parâmetros retornados no objeto da resposta é  um vetor de objeto, cada um contendo o nome de todos movimentos daquele pokémon e a url de cada um.
+      - **Modal sobre cada movimento**
+        - É acessado por meio do modal acima, no caso, ao apertar em algum movimento da listagem acima o modal sobre o movimento é aberto.
+        - Assim como o de cima, também é deslizável(swipeable), mas nesse caso na horizontal
+        - Nele é feito a requisição para obter as informações exibidas sobre o movimento selecionado.
+        - Essa requisição depende da url do movimento selecionado, ou seja, assim como mencionado anteriormente tamém é uma requisição que depende de outra.
+        - Nesse caso depende da requisição sobre os detalhes do pokémon feita na página de detalhes do pokémon, um dos parâmetros retornados no objeto da resposta é  um vetor de objeto, cada um contendo o nome de todos movimentos daquele pokémon e a url de cada um.
 
 * **Modais**
 <div align="center" >
