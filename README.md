@@ -114,6 +114,12 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
                 - Essa requisição depende da url do movimento selecionado, ou seja, assim como mencionado anteriormente tamém é uma requisição que depende de outra.
                   - Nesse caso depende da requisição sobre os detalhes do pokémon feita na página de detalhes do pokémon, um dos parâmetros retornados no objeto da resposta é  um vetor de objeto, cada um contendo o nome de todos movimentos daquele pokémon e a url de cada um.
 
+* **Modais**
+<div align="center" >
+  <img src="https://i.imgur.com/Canu4px.gif" width="225">____<img src="https://i.imgur.com/aKREnNL.gif" width="225">____<img src="https://i.imgur.com/RwkgnR0.gifv" width=225>____<img src="https://i.imgur.com/E7qq0iw.gif" width="225">
+</div>
+
+
         - Funcionalidades em desenvolvimento:
 
             i. Modal de evolução dos pokémons
