@@ -55,6 +55,13 @@ interface IDescribe {
     }
 }
 
+export interface IMoves {
+    move: {
+        name: string;
+        url: string;
+    }
+}
+
 interface IIconType {
     icon: React.FC<SvgProps>;
     color: string;
@@ -69,6 +76,13 @@ const defaultDescribeValue = {
         name: '',
     }
 }
+
+const defaultMovesValue = [{
+    move: {
+        name: '',
+        url: ''
+    }
+}]
 
 const defaultEvolutionData = {
     chain: {
@@ -99,6 +113,8 @@ export function PokemonDetails() {
     const [detailsData, setDetailsData] = useState<IPokemonDetails>({} as IPokemonDetails);
     const [speciesData, setSpeciesData] = useState<SpeciesDataDTO>({} as SpeciesDataDTO)
     const [describe, setDescribe] = useState<IDescribe>(defaultDescribeValue as IDescribe);
+    const [moves, setMoves] = useState<IMoves[]>(defaultMovesValue as IMoves[])
+    const [fourRandomMoves, setFourRandomMoves] = useState<IMoves[]>(defaultMovesValue as IMoves[]);
     // const [evolutionsData, setEvolutionsData] = useState(defaultEvolutionData as EvolutionDTO);
     const { individualSearchProps } = useIndividualSearch();
     const { individualSearch } = individualSearchProps
@@ -111,7 +127,15 @@ export function PokemonDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [isSpeciesDetailsLoading, setIsSpeciesDetailsLoading] = useState(true);
     // const [isEvolutionsDataLoading, setIsEvolutionsDataLoading] = useState(true);
-
+    function selectFourRandomValuesofMoves(data: IMoves[]) {
+        if (data.length > 0) {
+            const randomMoves = data.sort(() => (0.5 - Math.random()))
+            const fourRandomMoves = randomMoves.slice(0, 4);
+            setFourRandomMoves(fourRandomMoves);
+        } else {
+            setFourRandomMoves(data);
+        }
+    }
 
     const [isMovesVisible, setIsMovesVisible] = useState(false);
     // const [isEvolutionVisible, setIsEvolutionVisible] = useState(false);
@@ -177,7 +201,8 @@ export function PokemonDetails() {
                 const detailsRouteWithID = detailsRoute.split('v2/')[1];
                 const data = await individualSearch(detailsRouteWithID);
                 setDetailsData(data);
-
+                setMoves(data.moves);
+                selectFourRandomValuesofMoves(data.moves);
             } catch (err) {
                 console.log("loadPokemonDetailsData Error:", err);
                 setisErrored(true);
@@ -442,7 +467,7 @@ export function PokemonDetails() {
                                     (
                                         <PokemonTypesContainer>
                                             {
-                                                detailsData.moves.slice(0, 4).map(({ move }, index) => {
+                                                fourRandomMoves.map(({ move }, index) => {
                                                     return (
                                                         <InfoText
                                                             wrap
@@ -502,7 +527,7 @@ export function PokemonDetails() {
                     !isLoading && (
                         <MovesModal
                             onOpen={handleOpenMovesModal}
-                            movesData={detailsData.moves}
+                            movesData={moves}
                             isLoading={isLoading}
                             isVisible={isMovesVisible}
                             onClose={handleCloseModal}

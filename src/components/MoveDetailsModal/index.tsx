@@ -118,6 +118,7 @@ export function MoveDetailsModal({
                 backdropOpacity={0.5}
                 isVisible={isVisible}
                 onSwipeCancel={onOpen}
+                onBackdropPress={onClose}
                 animationInTiming={700}
                 animationOutTiming={700}
                 propagateSwipe

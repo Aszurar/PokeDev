@@ -20,10 +20,10 @@ interface IMoveList {
     handleSetMoveInfo: (moveInfo: IMoveInfo) => void;
 }
 export function MovesList({ moves, onDetailsOpen, handleSetMoveInfo }: IMoveList) {
-    const sortMoves = moves.sort((a, b) => a.move.name.localeCompare(b.move.name));
+    //ordernar por ordem algabética
     return (
         <List
-            data={sortMoves}
+            data={moves}
             keyExtractor={({ move }) => String(move.url)}
             renderItem={({ item }) => {
                 const { move } = item;

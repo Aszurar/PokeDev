@@ -75,6 +75,7 @@ export function MovesModal({
                 backdropOpacity={0.5}
                 isVisible={isVisible}
                 onSwipeCancel={onOpen}
+                onBackdropPress={onClose}
                 animationInTiming={700}
                 animationOutTiming={700}
                 onSwipeComplete={onClose}
@@ -103,7 +104,7 @@ export function MovesModal({
                     {!isLoading ? (
                         <ListContainer>
                             <MovesList
-                                moves={movesData}
+                                moves={movesData.sort((a, b) => a.move.name.localeCompare(b.move.name))}
                                 onDetailsOpen={handleOpenMoveDetailsModal}
                                 handleSetMoveInfo={handleSetMoveInfo}
                             />
