@@ -116,7 +116,7 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
 
 * **Modais**
 <div align="center" >
-  <img src="https://i.imgur.com/Canu4px.gif" width="200">____<img src="https://i.imgur.com/aKREnNL.gif" width="200">____<img src="https://i.imgur.com/RwkgnR0.gif" width=200>____<img src="https://i.imgur.com/E7qq0iw.gif" width="200">
+  <img src="https://i.imgur.com/Canu4px.gif" width="175">____<img src="https://i.imgur.com/aKREnNL.gif" width="175">____<img src="https://i.imgur.com/RwkgnR0.gif" width=175>____<img src="https://i.imgur.com/E7qq0iw.gif" width="175">
 </div>
 
 
