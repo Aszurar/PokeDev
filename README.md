@@ -119,25 +119,22 @@ Com esse projeto foi posto em prática quase todos os conceitos aprendidos com m
   <img src="https://i.imgur.com/Canu4px.gif" width="175">____<img src="https://i.imgur.com/aKREnNL.gif" width="175">____<img src="https://i.imgur.com/RwkgnR0.gif" width=175>____<img src="https://i.imgur.com/E7qq0iw.gif" width="175">
 </div>
 
+- Funcionalidades em desenvolvimento:
 
-        - Funcionalidades em desenvolvimento:
+    i. Modal de evolução dos pokémons
+    - Não foi possível terminar ainda a parte da impressão no modal e estilização das evoluções de cada pokémon mas a requisição já foi contruída no código assim como o botao de evolução
+        - O modal foi desativado para voltar quando a funcionalidade tiver pronta)
 
-            i. Modal de evolução dos pokémons
-                - Não foi possível terminar ainda a parte da impressão no modal e estilização das evoluções de cada pokémon mas a requisição já foi contruída no código assim como o botao de evolução
-                  - O modal foi desativado para voltar quando a funcionalidade tiver pronta)
+    ii. Página de "Meus Pokémon" e salvar pokémon
+    - Funcionalidade que permite o usuário salvar/favoritar determinado pokémon e ele ser salvo localmente no dispositivo físico com Assync Storage.
+    - Ainda não foi possível realizar essa funcionalidade mais já foi planejada.
 
-            ii. Página de "Meus Pokémon" e salvar pokémon
-                - Funcionalidade que permite o usuário salvar/favoritar determinado pokémon e ele ser salvo localmente no dispositivo físico com Assync Storage.
-                - Ainda não foi possível realizar essa funcionalidade mais já foi planejada.
+    iii. Página sobre o Movimento
+    - Uma página com mais inforações sobre o movimento selecionado no modal sobre os movimentos.
+    - Teríamos um botão nele que acessaria essa página para detalhar mais informações e uma listagem com todos pokémons que possui aquele movimento.
 
-            iii. Página sobre o Movimento
-                - Uma página com mais inforações sobre o movimento selecionado no modal sobre os movimentos.
-                - Teríamos um botão nele que acessaria essa página para detalhar mais informações e uma listagem com todos pokémons que possui aquele movimento.
-            iv. Splash Screen
-                - Tela de loading inicial da aplicação.
-
-
-
+    iv. Splash Screen
+    - Tela de loading inicial da aplicação.
 
 ___
 
