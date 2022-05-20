@@ -24,7 +24,7 @@ ___
 
 ## :information_source: Sobre
 
-- Uma **pokedex** seria uma aparalho que teria todas informações sobre os pokémons, os quais os personagens dos jogos e do anime usam para conhecer sobre cada pokémon, ver suas estatísticas, movimentos, habitat, habilidades dentre outras informações. Ou seja, é basicamente uma aplicação Wiki ou Bestiário de pokémon.
+- Uma **pokedex** seria uma aparelho que teria todas informações sobre os pokémons, os quais os personagens dos jogos e do anime usam para conhecer sobre cada pokémon, ver suas estatísticas, movimentos, habitat, habilidades dentre outras informações. Ou seja, é basicamente uma aplicação Wiki ou Bestiário de pokémon.
 - Para a alimentação dos dados foi usado a PokeAPI, uma API de Pokémon muito bem documentada, livre para usar e popular, segue o link:
   - PokeApi: https://pokeapi.co/
 - Para criação das interfaces foi usado React Native em conjunto com TypeScript e diversas bibliotecas disponíveis para React Native como:
@@ -42,7 +42,7 @@ ___
 
 ## :interrobang: Motivo
 
-Com esse projeto foi posto em prática quase todos os conceitos aprendidos com minha experiência profissional e educational princpalmente com a Rocketseat.
+Com esse projeto foi posto em prática quase todos os conceitos aprendidos com minha experiência profissional e educacional princpalmente com a Rocketseat.
 
 1. **Home**
 <img src="https://i.imgur.com/CPbyHen.png" width="1000">

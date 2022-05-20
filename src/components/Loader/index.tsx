@@ -4,6 +4,7 @@ import digletAnimation from '../../assets/diglet.json';
 import pokeballAnimation from '../../assets/pokeball.json';
 import skeletonTextAnimation from '../../assets/skeleton.json';
 import skeletonAnimation from '../../assets/skeletonImage.json';
+import pokeballOpen from '../../assets/pokeballOpen.json';
 
 
 
