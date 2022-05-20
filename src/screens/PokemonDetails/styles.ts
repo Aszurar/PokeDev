@@ -21,6 +21,7 @@ export const CardInfoContainer = styled.View`
 export const HeaderCardInfo = styled.View`
     width: 100%;
     flex-direction: row;
+    align-items: center;
 `;
 
 export const ImageContainer = styled.View`

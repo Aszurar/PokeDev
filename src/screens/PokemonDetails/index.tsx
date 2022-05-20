@@ -25,7 +25,7 @@ import {
 } from './styles';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { formatMeasure } from '../../utils/formatMeasure';
-import { ScrollView, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, View } from 'react-native';
 import { SpeciesDataDTO } from '../../dtos/SpeciesDataDTO';
 import { setRarity } from '../../utils/setRarity';
 import { XCircle } from 'react-native-feather';
@@ -41,6 +41,8 @@ import { setColorandIconByType } from '../../utils/setColorandIconByType';
 import { SvgProps } from 'react-native-svg';
 import { IconTyoe } from '../../components/IconTyoe';
 import { IPokemonDetails, useIndividualSearch } from '../../hooks/individualSearch';
+import { useMyPokemon } from '../../hooks/myPokemon';
+import theme from '../../global/styles/theme';
 interface Params {
     name: string;
     url: string
@@ -108,6 +110,10 @@ const defaultEvolutionData = {
 
 export function PokemonDetails() {
     const route = useRoute();
+    const { individualSearchProps } = useIndividualSearch();
+    const { individualSearch } = individualSearchProps
+
+    const { savePokemon } = useMyPokemon();
 
     const { name: pokemonName, url: detailsRoute } = route.params as Params;
     const [detailsData, setDetailsData] = useState<IPokemonDetails>({} as IPokemonDetails);
@@ -116,8 +122,6 @@ export function PokemonDetails() {
     const [moves, setMoves] = useState<IMoves[]>(defaultMovesValue as IMoves[])
     const [fourRandomMoves, setFourRandomMoves] = useState<IMoves[]>(defaultMovesValue as IMoves[]);
     // const [evolutionsData, setEvolutionsData] = useState(defaultEvolutionData as EvolutionDTO);
-    const { individualSearchProps } = useIndividualSearch();
-    const { individualSearch } = individualSearchProps
 
 
     const iconData: IIconType[] = []
@@ -127,6 +131,10 @@ export function PokemonDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [isSpeciesDetailsLoading, setIsSpeciesDetailsLoading] = useState(true);
     // const [isEvolutionsDataLoading, setIsEvolutionsDataLoading] = useState(true);
+
+    const [isSaveLoading, setIsSaveLoading] = useState(false);
+
+
     function selectFourRandomValuesofMoves(data: IMoves[]) {
         if (data.length > 0) {
             const randomMoves = data.sort(() => (0.5 - Math.random()))
@@ -225,10 +233,21 @@ export function PokemonDetails() {
     }, [isLoading])
 
 
-    function handleSavePokemon() {
+    async function handleSavePokemon() {
+        setIsSaveLoading(true);
         const pokemonTotalData = {
-            detailsData: detailsData,
-            speciesData: speciesData,
+            detailsDataSaved: detailsData,
+            speciesDataSaved: speciesData,
+        }
+
+        try {
+            await savePokemon(pokemonTotalData);
+            Alert.alert('Salvo com sucesso!');
+        } catch (err) {
+            console.log('Erro no salvamento', err);
+            Alert.alert('Erro ao salvar!');
+        } finally {
+            setIsSaveLoading(false);
         }
     }
 
@@ -269,7 +288,7 @@ export function PokemonDetails() {
                                     <LabelContainer style={{ flexDirection: 'row' }}>
                                         <FieldInfoText
                                             label='Nome:'
-                                            text={pokemonName}
+                                            text={pokemonName.replace(/-/g, ' ')}
                                             isLoading={isLoading}
                                             textField="pokemonName"
                                             widthLoad={RFValue(160)}
@@ -385,23 +404,33 @@ export function PokemonDetails() {
                                 </IconTypeContainer>
 
                                 <LabelContainer>
-                                    <BorderButtonContainer
-                                        color='blue'
-                                    >
-                                        <BorderButton
-                                            onPress={() => { }}
-                                        >
-                                            <BorderButtonText
-                                                style={{
-                                                    includeFontPadding: false,
-                                                }}
-                                                color="blue"
-                                            >
-                                                Salvar
-                                            </BorderButtonText>
-                                        </BorderButton>
-                                    </BorderButtonContainer>
 
+                                    {(!isLoading && !isSpeciesDetailsLoading) && (
+                                        <BorderButtonContainer
+                                            color='blue'
+                                        >
+                                            {!isSaveLoading ?
+                                                <BorderButton
+                                                    onPress={handleSavePokemon}
+                                                >
+                                                    <BorderButtonText
+                                                        style={{
+                                                            includeFontPadding: false,
+                                                        }}
+                                                        color="blue"
+                                                    >
+                                                        Salvar
+                                                    </BorderButtonText>
+                                                </BorderButton>
+                                                :
+                                                <ActivityIndicator
+                                                    color={theme.colors.comp}
+                                                    size='small'
+                                                />
+                                            }
+                                        </BorderButtonContainer>
+                                    )
+                                    }
                                     <BorderButtonContainer
                                         style={{ marginTop: RFValue(12) }}
                                     >
