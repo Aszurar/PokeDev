@@ -14,20 +14,18 @@ export const Main = styled.View`
 
 export const CardInfoContainer = styled.View`
     width: 100%;
-    flex-direction: row;
-    height: ${RFValue(96)}px;
 
     margin-top: ${RFValue(31)}px;
-    margin-bottom: ${RFValue(80)}px;
 `;
 
-export const ImageAndMeasureContainer = styled.View`
-    width: ${RFValue(110)}px;
+export const HeaderCardInfo = styled.View`
+    width: 100%;
+    flex-direction: row;
 `;
 
 export const ImageContainer = styled.View`
-    height: 100%;
-    width: ${RFValue(96)}px;
+    height: ${RFValue(96)}px;
+    width: ${RFValue(110)}px;
     justify-content: center;
     align-items: center;
 
@@ -41,38 +39,35 @@ export const PokemonImg = styled.Image`
     height: ${RFValue(96)}px;
 `;
 
-export const MeasurePokemonContainer = styled.View`
-    width: 100%;
-    flex-direction: row;
-
-    margin-top: ${RFValue(4)}px;
-    justify-content: space-between;
-`;
-
 export const InfoContainer = styled.View`
     flex: 1;
     margin-left: ${RFValue(13)}px;
-
-    /* background-color: ${({ theme }) => theme.colors.secundary}; */
 `;
-
 export const FooterInfoContainer = styled.View`
     flex-direction: row;
     margin-top: ${RFValue(9)}px;
     justify-content: space-between;
+    align-items: center;
 `;
 
-export const EvolutionsButtonContainer = styled.View`
-    border-color: ${({ theme }) => theme.colors.danger};
+export const IconTypeContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    width: ${RFValue(110)}px;
+`;
+interface IBorderButton {
+    color?: 'red' | 'blue';
+}
+
+export const BorderButtonContainer = styled.View<IBorderButton>`
+    border-color: ${({ theme, color = "red" }) => color === 'red' ? theme.colors.danger : theme.colors.comp};
     border-width: ${RFValue(2)}px;
     border-radius: ${RFValue(17)}px;
     height: ${RFValue(24)}px;
     width: ${RFValue(150)}px;
     align-self: center;
-    margin-top: ${RFValue(24)}px;
-    margin-bottom: ${RFValue(6)}px;
 `;
-export const EvolutionsButton = styled(BorderlessButton)`
+export const BorderButton = styled(BorderlessButton)`
     /* background-color: ${({ theme }) => theme.colors.danger}; */
     border-color: ${({ theme }) => theme.colors.danger};
     border-width: ${RFValue(2)}px;
@@ -84,10 +79,10 @@ export const EvolutionsButton = styled(BorderlessButton)`
     padding: 0 ${RFValue(10)}px;
 `;
 
-export const EvolutionsButtonText = styled.Text`
+export const BorderButtonText = styled.Text<IBorderButton>`
     font-family: ${({ theme }) => theme.fonts.bold};
     font-size: ${RFValue(10)}px;
-    color: ${({ theme }) => theme.colors.danger};
+    color: ${({ theme, color = "red" }) => color === "blue" ? theme.colors.comp : theme.colors.danger};
     text-transform: uppercase;
 `;
 
@@ -104,7 +99,7 @@ export const PokemonTypesContainer = styled.View`
 
 export const DescriptionContainer = styled.View`
     margin-bottom: ${RFValue(16)}px;
-    margin-top: ${RFValue(30)}px;
+    margin-top: ${RFValue(12)}px;
 `;
 
 
